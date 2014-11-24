@@ -53,7 +53,8 @@ namespace cam
 
         private void timer_refresh_Tick(object sender, EventArgs e)
         {
-            if (!IsTimeOfDayBetween(DateTime.Now, new TimeSpan(8, 00, 0), new TimeSpan(17, 00, 0)))
+            if (Properties.Settings.Default.OnlyFunctionOnWorkingHours && 
+                !IsTimeOfDayBetween(DateTime.Now, new TimeSpan(8, 00, 0), new TimeSpan(17, 00, 0)))
             {
                 label1.Visible = true;
                 label1.Text = @"Non working hours..";

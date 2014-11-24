@@ -9,6 +9,7 @@ namespace cam
         ResolutionError,
         Disabled,
         Unknown,
-        Deleted_VideoArchivesRemained,
+        Deleted_VideoArchivesRemained,
+
     }
 }
