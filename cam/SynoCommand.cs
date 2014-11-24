@@ -39,8 +39,9 @@ namespace cam
                     sessionId = dict["data"]["sid"];
             }
             catch (Exception)
-            {
+            {                
                 sessionId = null;
+                throw;
             }
             
         }
