@@ -51,7 +51,7 @@ namespace cam
 
             Text = Address;
 
-            if (String.IsNullOrEmpty(Settings.Default.Port))
+            if (!String.IsNullOrEmpty(Settings.Default.Port))
             {
                 Port = ":" + Settings.Default.Port;
             }
