@@ -84,19 +84,11 @@ namespace SynoCam
             panel1.Visible = !panel1.Visible;
         }
 
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
-        {
-            timer_refresh.Interval = (int)TimeSpan.FromSeconds(4).TotalMilliseconds;
-        }
-
-        private void pictureBox1_MouseLeave(object sender, EventArgs e)
-        {
-            timer_refresh.Interval = (int)TimeSpan.FromSeconds(60).TotalMilliseconds;
-        }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            timer_refresh.Stop();
             reloadImage();
+            timer_refresh.Start();
         }
 
         private void reloadImage()
