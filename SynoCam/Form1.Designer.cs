@@ -1,4 +1,4 @@
-﻿namespace cam
+﻿namespace SynoCam
 {
     partial class Form1
     {

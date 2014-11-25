@@ -7,8 +7,8 @@
     <ProjectGuid>{DC5B5454-3858-4AEF-8E03-69BA736D0F88}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cam</RootNamespace>
-    <AssemblyName>cam</AssemblyName>
+    <RootNamespace>SynoCam</RootNamespace>
+    <AssemblyName>SynoCam</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>

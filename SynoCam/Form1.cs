@@ -5,11 +5,12 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Net;
+using SynoCam.Properties;
 
-//http://ukdl.synology.com/download/ds/userguide/Surveillance_Station_Web_API_v1.3.pdf
-using cam.Properties;
+//http://ukdl.synology.com/download/Document/DeveloperGuide/Surveillance_Station_Web_API.pdf
 
-namespace cam
+
+namespace SynoCam
 {
     public partial class Form1 : Form
     {

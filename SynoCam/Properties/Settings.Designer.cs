@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace cam.Properties {
+namespace SynoCam.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

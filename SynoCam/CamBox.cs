@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace cam
+namespace SynoCam
 {
     public partial class CamBox : UserControl
     {

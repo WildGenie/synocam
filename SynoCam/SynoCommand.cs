@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Web.Script.Serialization;
 
-namespace cam
+namespace SynoCam
 {
     public class SynoCommand
     {
