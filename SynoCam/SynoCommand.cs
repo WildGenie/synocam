@@ -78,7 +78,7 @@ namespace SynoCam
                 httpRequest.GetParameters.Add("uri", url);
                 httpRequest.GetParameters.Add("limit", "4");
 
-                string jsonResponse = httpRequest.Get(url + "SurveillanceStation/camera.cgi");
+                string jsonResponse = httpRequest.Get(url + "entry.cgi");
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 Dictionary<string, dynamic> cameraListDictionary =
                     javaScriptSerializer.Deserialize<Dictionary<string, dynamic>>(jsonResponse);
@@ -107,7 +107,7 @@ namespace SynoCam
                 httpRequest.GetParameters.Add("method", "GetSnapshot");
                 httpRequest.GetParameters.Add("uri", url);
 
-                return httpRequest.GetUrl(url + "SurveillanceStation/camera.cgi");
+                return httpRequest.GetUrl(url + "entry.cgi");
             }
             catch (Exception)
             {
