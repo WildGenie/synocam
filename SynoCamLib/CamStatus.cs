@@ -1,4 +1,4 @@
-namespace SynoCam
+namespace SynoCamLib
 {
     public enum CamStatus
     {
@@ -10,6 +10,5 @@ namespace SynoCam
         Disabled,
         Unknown,
         Deleted_VideoArchivesRemained,
-
     }
 }

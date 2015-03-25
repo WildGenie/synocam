@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynoCam", "SynoCam\SynoCam.csproj", "{DC5B5454-3858-4AEF-8E03-69BA736D0F88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynoCamLib", "SynoCamLib\SynoCamLib.csproj", "{4FA5E61E-A01E-4F5B-BA15-EDAA6D485E19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DC5B5454-3858-4AEF-8E03-69BA736D0F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC5B5454-3858-4AEF-8E03-69BA736D0F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC5B5454-3858-4AEF-8E03-69BA736D0F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FA5E61E-A01E-4F5B-BA15-EDAA6D485E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FA5E61E-A01E-4F5B-BA15-EDAA6D485E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FA5E61E-A01E-4F5B-BA15-EDAA6D485E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FA5E61E-A01E-4F5B-BA15-EDAA6D485E19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
