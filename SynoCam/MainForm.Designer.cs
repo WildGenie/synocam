@@ -33,13 +33,17 @@ namespace SynoCam
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.sizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.miniatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControl = new System.Windows.Forms.Panel();
             this.labelLoading = new System.Windows.Forms.Label();
+            this.nearRealtimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secondsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minutesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minutesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.noFocusCueButton1 = new SynoCam.NoFocusCueButton();
             this.buttonClose = new SynoCam.NoFocusCueButton();
             this.buttonMinimize = new SynoCam.NoFocusCueButton();
-            this.noFocusCueButton1 = new SynoCam.NoFocusCueButton();
             this.contextMenu.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -47,23 +51,21 @@ namespace SynoCam
             // contextMenu
             // 
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sizeToolStripMenuItem});
+            this.refreshRateToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(95, 26);
+            this.contextMenu.Size = new System.Drawing.Size(140, 26);
             // 
-            // sizeToolStripMenuItem
+            // refreshRateToolStripMenuItem
             // 
-            this.sizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miniatureToolStripMenuItem});
-            this.sizeToolStripMenuItem.Name = "sizeToolStripMenuItem";
-            this.sizeToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
-            this.sizeToolStripMenuItem.Text = "Size";
-            // 
-            // miniatureToolStripMenuItem
-            // 
-            this.miniatureToolStripMenuItem.Name = "miniatureToolStripMenuItem";
-            this.miniatureToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.miniatureToolStripMenuItem.Text = "Miniature";
+            this.refreshRateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nearRealtimeToolStripMenuItem,
+            this.secondsToolStripMenuItem,
+            this.minuteToolStripMenuItem,
+            this.minutesToolStripMenuItem,
+            this.minutesToolStripMenuItem1});
+            this.refreshRateToolStripMenuItem.Name = "refreshRateToolStripMenuItem";
+            this.refreshRateToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.refreshRateToolStripMenuItem.Text = "Refresh Rate";
             // 
             // panelControl
             // 
@@ -88,6 +90,59 @@ namespace SynoCam
             this.labelLoading.Text = "Loading, please wait..";
             this.labelLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // nearRealtimeToolStripMenuItem
+            // 
+            this.nearRealtimeToolStripMenuItem.Name = "nearRealtimeToolStripMenuItem";
+            this.nearRealtimeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.nearRealtimeToolStripMenuItem.Text = "2 seconds";
+            this.nearRealtimeToolStripMenuItem.Click += new System.EventHandler(this.TwoSecondsToolStripMenuItemClick);
+            // 
+            // secondsToolStripMenuItem
+            // 
+            this.secondsToolStripMenuItem.Name = "secondsToolStripMenuItem";
+            this.secondsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.secondsToolStripMenuItem.Text = "30 seconds";
+            this.secondsToolStripMenuItem.Click += new System.EventHandler(this.ThirtySecondsToolStripMenuItemClick);
+            // 
+            // minuteToolStripMenuItem
+            // 
+            this.minuteToolStripMenuItem.Name = "minuteToolStripMenuItem";
+            this.minuteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.minuteToolStripMenuItem.Text = "1 minute";
+            this.minuteToolStripMenuItem.Click += new System.EventHandler(this.OneMinuteToolStripMenuItemClick);
+            // 
+            // minutesToolStripMenuItem
+            // 
+            this.minutesToolStripMenuItem.Name = "minutesToolStripMenuItem";
+            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.minutesToolStripMenuItem.Text = "2 minutes";
+            this.minutesToolStripMenuItem.Click += new System.EventHandler(this.TwoMinutesToolStripMenuItemClick);
+            // 
+            // minutesToolStripMenuItem1
+            // 
+            this.minutesToolStripMenuItem1.Name = "minutesToolStripMenuItem1";
+            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.minutesToolStripMenuItem1.Text = "4 minutes (default)";
+            this.minutesToolStripMenuItem1.Click += new System.EventHandler(this.FourMinutesToolStripMenuItemClick);
+            // 
+            // noFocusCueButton1
+            // 
+            this.noFocusCueButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.noFocusCueButton1.BackColor = System.Drawing.Color.Black;
+            this.noFocusCueButton1.FlatAppearance.BorderSize = 0;
+            this.noFocusCueButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.noFocusCueButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.noFocusCueButton1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noFocusCueButton1.ForeColor = System.Drawing.Color.White;
+            this.noFocusCueButton1.Location = new System.Drawing.Point(0, 48);
+            this.noFocusCueButton1.Name = "noFocusCueButton1";
+            this.noFocusCueButton1.Size = new System.Drawing.Size(14, 25);
+            this.noFocusCueButton1.TabIndex = 3;
+            this.noFocusCueButton1.TabStop = false;
+            this.noFocusCueButton1.Text = "R";
+            this.noFocusCueButton1.UseVisualStyleBackColor = false;
+            this.noFocusCueButton1.Click += new System.EventHandler(this.RefreshButtonClick);
+            // 
             // buttonClose
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -104,7 +159,7 @@ namespace SynoCam
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "x";
             this.buttonClose.UseVisualStyleBackColor = false;
-            this.buttonClose.Click += new System.EventHandler(this.button1_Click);
+            this.buttonClose.Click += new System.EventHandler(this.CloseButtonClick);
             // 
             // buttonMinimize
             // 
@@ -123,25 +178,7 @@ namespace SynoCam
             this.buttonMinimize.TabStop = false;
             this.buttonMinimize.Text = "-";
             this.buttonMinimize.UseVisualStyleBackColor = false;
-            this.buttonMinimize.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // noFocusCueButton1
-            // 
-            this.noFocusCueButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.noFocusCueButton1.BackColor = System.Drawing.Color.Black;
-            this.noFocusCueButton1.FlatAppearance.BorderSize = 0;
-            this.noFocusCueButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.noFocusCueButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.noFocusCueButton1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noFocusCueButton1.ForeColor = System.Drawing.Color.White;
-            this.noFocusCueButton1.Location = new System.Drawing.Point(0, 48);
-            this.noFocusCueButton1.Name = "noFocusCueButton1";
-            this.noFocusCueButton1.Size = new System.Drawing.Size(14, 25);
-            this.noFocusCueButton1.TabIndex = 3;
-            this.noFocusCueButton1.TabStop = false;
-            this.noFocusCueButton1.Text = "R";
-            this.noFocusCueButton1.UseVisualStyleBackColor = false;
-            this.noFocusCueButton1.Click += new System.EventHandler(this.noFocusCueButton1_Click);
+            this.buttonMinimize.Click += new System.EventHandler(this.MinimizeButtonClick);
             // 
             // MainForm
             // 
@@ -160,8 +197,8 @@ namespace SynoCam
             this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.DoubleClick += new System.EventHandler(this.MainForm_DoubleClick);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            this.DoubleClick += new System.EventHandler(this.MainFormDoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.contextMenu.ResumeLayout(false);
             this.panelControl.ResumeLayout(false);
@@ -172,13 +209,17 @@ namespace SynoCam
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip contextMenu;
-        private System.Windows.Forms.ToolStripMenuItem sizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem miniatureToolStripMenuItem;
         private NoFocusCueButton buttonClose;
         private NoFocusCueButton buttonMinimize;
         private Panel panelControl;
         private Label labelLoading;
         private NoFocusCueButton noFocusCueButton1;
+        private ToolStripMenuItem refreshRateToolStripMenuItem;
+        private ToolStripMenuItem nearRealtimeToolStripMenuItem;
+        private ToolStripMenuItem secondsToolStripMenuItem;
+        private ToolStripMenuItem minuteToolStripMenuItem;
+        private ToolStripMenuItem minutesToolStripMenuItem;
+        private ToolStripMenuItem minutesToolStripMenuItem1;
     }
 }
 

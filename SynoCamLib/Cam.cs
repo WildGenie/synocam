@@ -1,12 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
 
 namespace SynoCamLib
 {
-    public class Cam : PictureBox
+    public sealed class Cam : PictureBox
     {
+        private bool _showRedDot;
+
         public string CamName { get; private set; }
         public CamStatus Status { get; private set; }
         public new bool Enabled { get; private set; }
@@ -42,6 +45,24 @@ namespace SynoCamLib
             _timer = new System.Timers.Timer(1);
             _timer.Elapsed += TimerOnElapsed;
             _timer.Start();
+
+            LoadCompleted += OnLoadCompleted;
+            Paint += OnPaint;
+        }
+
+        private void OnPaint(object sender, PaintEventArgs paintEventArgs)
+        {
+            if (!_showRedDot)
+                return;
+
+            var rect = new Rectangle(2, 2, 2, 2);
+            var pen = new Pen(Color.Crimson, 4);
+            paintEventArgs.Graphics.DrawRectangle(pen, rect);
+        }
+
+        private void OnLoadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            _showRedDot = !_showRedDot;
         }
 
         private void OnClick(object sender, EventArgs eventArgs)

@@ -7,12 +7,22 @@ using System.Net;
 using SynoCam.Properties;
 using SynoCamLib;
 
-//http://ukdl.synology.com/download/Document/DeveloperGuide/Surveillance_Station_Web_API.pdf
-
 namespace SynoCam
 {
     public partial class MainForm : Form
     {
+        protected class NativeCalls
+        {
+            public const int WmNclbuttondown = 0xA1;
+            public const int HtCaption = 0x2;
+
+            [DllImportAttribute("user32.dll")]
+            public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+            [DllImport("user32.dll")]
+            public static extern bool ReleaseCapture();
+        }
+
         private string Address { get; set; }
         private bool UseHttps { get; set; }
         private string Username { get; set; }
@@ -60,8 +70,9 @@ namespace SynoCam
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
             _synoCommand = new SynoCommand(Url, Username, Password);
 
-            labelLoading.MouseDown += MainForm_MouseDown;
-            labelLoading.DoubleClick += MainForm_DoubleClick;
+            labelLoading.MouseDown += MainFormMouseDown;
+            labelLoading.DoubleClick += MainFormDoubleClick;
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -171,8 +182,8 @@ namespace SynoCam
                 foreach (var cam in _cams)
                 {
                     Controls.Add(cam);
-                    cam.MouseDown += MainForm_MouseDown;
-                    cam.DoubleClick += MainForm_DoubleClick;
+                    cam.MouseDown += MainFormMouseDown;
+                    cam.DoubleClick += MainFormDoubleClick;
                     cam.LoadCompleted += cam_LoadCompleted;
                     cam.Visible = false;
                 }
@@ -181,7 +192,6 @@ namespace SynoCam
             {
                 MessageBox.Show(@"Unable to retrieve cameras:" + Environment.NewLine + ex.Message);
             }
-
         }
 
         void cam_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -207,7 +217,7 @@ namespace SynoCam
             _synoCommand.LogoutASync();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CloseButtonClick(object sender, EventArgs e)
         {
             Settings.Default.WindowTop = Top;
             Settings.Default.WindowLeft = Left;
@@ -217,40 +227,73 @@ namespace SynoCam
             Close();
         }
 
-        public const int WmNclbuttondown = 0xA1;
-        public const int HtCaption = 0x2;
-
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void MinimizeButtonClick(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
 
-        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        private void MainFormMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && e.Clicks == 1)
             {
-                ReleaseCapture();
-                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+                NativeCalls.ReleaseCapture();
+                NativeCalls.SendMessage(Handle, NativeCalls.WmNclbuttondown, NativeCalls.HtCaption, 0);
             }
         }
 
-        private void MainForm_DoubleClick(object sender, EventArgs e)
+        private void MainFormDoubleClick(object sender, EventArgs e)
         {
-            WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Maximized : FormWindowState.Normal;
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+                panelControl.BackColor = Color.Black;
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+                panelControl.BackColor = Color.FromArgb(255, 128, 255);
+            }
         }
 
-        private void noFocusCueButton1_Click(object sender, EventArgs e)
+        private void RefreshButtonClick(object sender, EventArgs e)
         {
             foreach (var cam in _cams)
             {
                 cam.GetPictureNow();
             }
+        }
+
+        private void ChangeRefreshRateForAllCameras(int seconds)
+        {
+            foreach (var cam in _cams)
+            {
+                cam.RefreshInMiliseconds = seconds;
+            }
+        }
+
+        private void FourMinutesToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ChangeRefreshRateForAllCameras(240000);
+        }
+
+        private void TwoMinutesToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ChangeRefreshRateForAllCameras(120000);
+        }
+
+        private void OneMinuteToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ChangeRefreshRateForAllCameras(60000);
+        }
+
+        private void ThirtySecondsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ChangeRefreshRateForAllCameras(30000);
+        }
+
+        private void TwoSecondsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ChangeRefreshRateForAllCameras(2000);
         }
     }
 }

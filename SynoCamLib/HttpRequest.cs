@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
@@ -23,16 +24,17 @@ namespace SynoCamLib
             var request = (HttpWebRequest) WebRequest.Create(getUrl);
             request.Method = "GET";
 
-            //Send Web-Request and receive a Web-Response
             var response = (HttpWebResponse) await request.GetResponseAsync();
 
-            //Translate data from the Web-Response to a string
             Stream dataStream = response.GetResponseStream();
+
+            if (dataStream == null)
+                throw new ApplicationException("Data received was invalid");
+
             var streamreader = new StreamReader(dataStream, Encoding.UTF8);
             string html = streamreader.ReadToEnd();
             streamreader.Close();
 
-            // clear request parameters
             GetParameters.Clear();
             PostParameters.Clear();
 
@@ -54,23 +56,22 @@ namespace SynoCamLib
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
 
-            //Attach data to the Web-Request
             byte[] postData = PostParameters.ByteEncode();
             request.ContentLength = postData.Length;
             Stream dataStream = request.GetRequestStream();
             dataStream.Write(postData, 0, postData.Length);
             dataStream.Close();
 
-            //Send Web-Request and receive a Web-Response
             var response = (HttpWebResponse) request.GetResponse();
-
-            //Translate data from the Web-Response to a string
             dataStream = response.GetResponseStream();
+
+            if (dataStream == null)
+                throw new ApplicationException("Data received was invalid");
+
             var streamreader = new StreamReader(dataStream, Encoding.UTF8);
             string html = streamreader.ReadToEnd();
-            streamreader.Close();
 
-            // clear request parameters
+            streamreader.Close();
             GetParameters.Clear();
             PostParameters.Clear();
 
@@ -87,7 +88,6 @@ namespace SynoCamLib
                     result += key + "=" + WebUtility.UrlEncode(this[key]) + "&";
                 }
 
-                // remove trailing "&"
                 return result.TrimEnd(new[] {'&'});
             }
 
