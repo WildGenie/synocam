@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using SynoCam.Properties;
@@ -171,27 +172,42 @@ namespace SynoCam
                 Width = Settings.Default.WindowWidth;
             }
 
-            UpdatePictureBoxes();
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    UpdatePictureBoxes().Wait();
+                }
+                catch (Exception ex)
+                {
+                    labelLoading.Invoke(new Action(() =>
+                    {
+                        string text = string.Format(@"Unable to load cameras, error: " + Environment.NewLine + "{0}", ex.InnerException.Message);
+                        labelLoading.Text = text;
+                        labelLoading.ForeColor = Color.IndianRed;
+                    }));
+                }
+            });
         }
 
-        private async void UpdatePictureBoxes()
+        private async Task<bool> UpdatePictureBoxes()
         {
-            try
+            bool result = false;
+
+            _cams = await _synoCommand.GetCamsASync();
+            foreach (var cam in _cams)
             {
-                _cams = await _synoCommand.GetCamsASync();
-                foreach (var cam in _cams)
-                {
-                    Controls.Add(cam);
-                    cam.MouseDown += MainFormMouseDown;
-                    cam.DoubleClick += MainFormDoubleClick;
-                    cam.LoadCompleted += cam_LoadCompleted;
-                    cam.Visible = false;
-                }
+                Cam cam1 = cam;
+                cam1.MouseDown += MainFormMouseDown;
+                cam1.DoubleClick += MainFormDoubleClick;
+                cam1.LoadCompleted += cam_LoadCompleted;
+                cam1.Visible = false;
+                
+                Invoke(new Action(() => Controls.Add(cam1)));
+                result = true;
             }
-            catch (ApplicationException ex)
-            {
-                MessageBox.Show(@"Unable to retrieve cameras:" + Environment.NewLine + ex.Message);
-            }
+
+            return result;
         }
 
         void cam_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
