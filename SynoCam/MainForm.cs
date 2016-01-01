@@ -31,7 +31,7 @@ namespace SynoCam
         private string Port { get; set; }
         
         private readonly SynoCommand _synoCommand;
-        List<Cam> _cams = new List<Cam>();
+        List<CamUi> _cams = new List<CamUi>();
 
         private string Url
         {
@@ -73,7 +73,6 @@ namespace SynoCam
 
             labelLoading.MouseDown += MainFormMouseDown;
             labelLoading.DoubleClick += MainFormDoubleClick;
-
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -85,13 +84,14 @@ namespace SynoCam
         {
             if (labelLoading.Visible)
             {
-                labelLoading.Top = 2;
-                labelLoading.Left = 2;
-                labelLoading.Width = Width - panelControl.Width - 4;
-                labelLoading.Height = Height - 4;
+                AdjustLoadingLabel();
             }
-                
 
+            AdjustCams();
+        }
+
+        private void AdjustCams()
+        {
             int formWidth = Width - 4 - panelControl.Width;
             int width = 2;
             foreach (var cam in _cams)
@@ -99,26 +99,33 @@ namespace SynoCam
                 cam.Left = width;
                 cam.Top = 2;
                 cam.Height = Height - 4;
-                cam.Width = formWidth / _cams.Count;
+                cam.Width = formWidth/_cams.Count;
                 width += cam.Width;
             }
         }
 
+        private void AdjustLoadingLabel()
+        {
+            labelLoading.Top = 2;
+            labelLoading.Left = 2;
+            labelLoading.Width = Width - panelControl.Width - 4;
+            labelLoading.Height = Height - 4;
+        }
+
         protected override void WndProc(ref Message m)
         {
-            const UInt32 wmNchittest = 0x0084;
-            const UInt32 wmMousemove = 0x0200;
-
-            const UInt32 htleft = 10;
-            const UInt32 htright = 11;
-            const UInt32 htbottomright = 17;
-            const UInt32 htbottom = 15;
-            const UInt32 htbottomleft = 16;
-            const UInt32 httop = 12;
-            const UInt32 httopleft = 13;
-            const UInt32 httopright = 14;
-
+            const int wmNchittest = 0x0084;
+            const int wmMousemove = 0x0200;
+            const int htleft = 10;
+            const int htright = 11;
+            const int htbottomright = 17;
+            const int htbottom = 15;
+            const int htbottomleft = 16;
+            const int httop = 12;
+            const int httopleft = 13;
+            const int httopright = 14;
             const int resizeHandleSize = 10;
+
             bool handled = false;
             if (m.Msg == wmNchittest || m.Msg == wmMousemove)
             {
@@ -126,7 +133,7 @@ namespace SynoCam
                 var screenPoint = new Point(m.LParam.ToInt32());
                 var clientPoint = PointToClient(screenPoint);
 
-                var boxes = new Dictionary<UInt32, Rectangle>
+                var boxes = new Dictionary<int, Rectangle>
                 {
                     {htbottomleft, new Rectangle(0, formSize.Height - resizeHandleSize, resizeHandleSize, resizeHandleSize)},
                     {htbottom, new Rectangle(resizeHandleSize, formSize.Height - resizeHandleSize, formSize.Width - 2*resizeHandleSize, resizeHandleSize)},
@@ -138,7 +145,7 @@ namespace SynoCam
                     {htleft, new Rectangle(0, resizeHandleSize, resizeHandleSize, formSize.Height - 2*resizeHandleSize) }
                 };
 
-                foreach (KeyValuePair<UInt32, Rectangle> hitBox in boxes)
+                foreach (KeyValuePair<int, Rectangle> hitBox in boxes)
                 {
                     if (hitBox.Value.Contains(clientPoint))
                     {
@@ -197,7 +204,7 @@ namespace SynoCam
             _cams = await _synoCommand.GetCamsASync();
             foreach (var cam in _cams)
             {
-                Cam cam1 = cam;
+                CamUi cam1 = cam;
                 cam1.MouseDown += MainFormMouseDown;
                 cam1.DoubleClick += MainFormDoubleClick;
                 cam1.LoadCompleted += cam_LoadCompleted;
@@ -230,7 +237,7 @@ namespace SynoCam
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _synoCommand.LogoutASync();
+           _synoCommand.LogoutASync().Wait(1000);
         }
 
         private void CloseButtonClick(object sender, EventArgs e)
@@ -287,29 +294,41 @@ namespace SynoCam
             }
         }
 
+        private const int Ms4Minutes = 240000;
+        private const int Ms2Minutes = 120000;
+        private const int Ms1Minute = 60000;
+        private const int Ms30Seconds = 30000;
+        private const int Ms2Seconds = 2000;
+
         private void FourMinutesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ChangeRefreshRateForAllCameras(240000);
+            ChangeRefreshRateForAllCameras(Ms4Minutes);
         }
 
         private void TwoMinutesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ChangeRefreshRateForAllCameras(120000);
+            ChangeRefreshRateForAllCameras(Ms2Minutes);
         }
 
         private void OneMinuteToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ChangeRefreshRateForAllCameras(60000);
+            ChangeRefreshRateForAllCameras(Ms1Minute);
         }
 
         private void ThirtySecondsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ChangeRefreshRateForAllCameras(30000);
+            ChangeRefreshRateForAllCameras(Ms30Seconds);
         }
 
         private void TwoSecondsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ChangeRefreshRateForAllCameras(2000);
+            ChangeRefreshRateForAllCameras(Ms2Seconds);
+        }
+
+        private void viewEventsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var eventviewer = new EventViewer();
+            eventviewer.ShowDialog(_synoCommand);
         }
     }
 }

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SynoCamLib
 {
-    public class HttpRequest
+    internal class HttpRequest
     {
-        public HttpParameters GetParameters;
-        public HttpParameters PostParameters;
+        internal HttpParameters GetParameters;
+        internal HttpParameters PostParameters;
 
-        public HttpRequest()
+        internal HttpRequest()
         {
             GetParameters = new HttpParameters();
             PostParameters = new HttpParameters();
         }
 
-        public async Task<string> GetASync(string url)
+        internal async Task<string> GetASync(string url)
         {
             string getUrl = url + "?" + GetParameters.UrlEncode();
             var request = (HttpWebRequest) WebRequest.Create(getUrl);
@@ -41,7 +41,7 @@ namespace SynoCamLib
             return html;
         }
 
-        public string GetUrl(string url)
+        internal string GetUrl(string url)
         {
             string getUrl = url + "?" + GetParameters.UrlEncode();
             var request = (HttpWebRequest) WebRequest.Create(getUrl);
@@ -49,7 +49,7 @@ namespace SynoCamLib
             return request.RequestUri.ToString();
         }
 
-        public string Post(string url)
+        internal string Post(string url)
         {
             string getUrl = url + "?" + GetParameters.UrlEncode();
             var request = (HttpWebRequest) WebRequest.Create(getUrl);
@@ -78,7 +78,7 @@ namespace SynoCamLib
             return html;
         }
 
-        public class HttpParameters : NameValueCollection
+        internal class HttpParameters : NameValueCollection
         {
             public string UrlEncode()
             {

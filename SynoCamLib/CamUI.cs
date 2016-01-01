@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SynoCamLib
 {
-    public sealed class Cam : PictureBox
+    public sealed class CamUi : PictureBox
     {
         private bool _showRedDot;
 
@@ -30,12 +30,13 @@ namespace SynoCamLib
 
         private readonly System.Timers.Timer _timer;
 
-        public Cam(string camName, CamStatus status, bool enabled, string url)
+        public CamUi(string camName, CamStatus status, bool enabled, string url, int defaultRefreshRateInMs = 240000)
         {
             Url = url;
             Enabled = enabled;
             Status = status;
             CamName = camName;
+            _refreshInMiliseconds = defaultRefreshRateInMs;
 
             SizeMode = PictureBoxSizeMode.Zoom;
             Click += OnClick;
@@ -77,8 +78,8 @@ namespace SynoCamLib
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            if ((int)_timer.Interval == 1)
-                RefreshInMiliseconds = 240000; // 4 minutes
+            if ((int)_timer.Interval == 1) // The first refresh of camera images should be fast, after that the normale refresh rate should be used
+                RefreshInMiliseconds = _refreshInMiliseconds;
 
             LoadAsync(Url);
         }
