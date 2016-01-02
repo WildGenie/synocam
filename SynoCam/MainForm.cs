@@ -195,13 +195,15 @@ namespace SynoCam
                     }));
                 }
             });
+
+            CheckRefreshRateToolStripMenuItems(Ms4Minutes);
         }
 
         private async Task<bool> UpdatePictureBoxes()
         {
             bool result = false;
 
-            _cams = await _synoCommand.GetCamsASync();
+            _cams = await _synoCommand.GetCamsASync(Ms4Minutes);
             foreach (var cam in _cams)
             {
                 CamUi cam1 = cam;
@@ -286,6 +288,15 @@ namespace SynoCam
             }
         }
 
+        private void CheckRefreshRateToolStripMenuItems(int seconds)
+        {
+            twoSecondsRefreshToolStripMenuItem.Checked = seconds == Ms2Seconds;
+            thirtySecondsRefreshToolStripMenuItem.Checked = seconds == Ms30Seconds;
+            oneMinuteRefreshToolStripMenuItem.Checked = seconds == Ms1Minute;
+            twoMinutesRefreshToolStripMenuItem.Checked = seconds == Ms2Minutes;
+            fourMinutesRefreshToolStripMenuItem.Checked = seconds == Ms4Minutes;
+        }
+
         private void ChangeRefreshRateForAllCameras(int seconds)
         {
             foreach (var cam in _cams)
@@ -302,26 +313,31 @@ namespace SynoCam
 
         private void FourMinutesToolStripMenuItemClick(object sender, EventArgs e)
         {
+            CheckRefreshRateToolStripMenuItems(Ms4Minutes);
             ChangeRefreshRateForAllCameras(Ms4Minutes);
         }
 
         private void TwoMinutesToolStripMenuItemClick(object sender, EventArgs e)
         {
+            CheckRefreshRateToolStripMenuItems(Ms2Minutes);
             ChangeRefreshRateForAllCameras(Ms2Minutes);
         }
 
         private void OneMinuteToolStripMenuItemClick(object sender, EventArgs e)
         {
+            CheckRefreshRateToolStripMenuItems(Ms1Minute);
             ChangeRefreshRateForAllCameras(Ms1Minute);
         }
 
         private void ThirtySecondsToolStripMenuItemClick(object sender, EventArgs e)
         {
+            CheckRefreshRateToolStripMenuItems(Ms30Seconds);
             ChangeRefreshRateForAllCameras(Ms30Seconds);
         }
 
         private void TwoSecondsToolStripMenuItemClick(object sender, EventArgs e)
         {
+            CheckRefreshRateToolStripMenuItems(Ms2Seconds);
             ChangeRefreshRateForAllCameras(Ms2Seconds);
         }
 

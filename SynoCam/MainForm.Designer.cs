@@ -34,17 +34,17 @@ namespace SynoCam
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.refreshRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nearRealtimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secondsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.minuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.minutesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.minutesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.twoSecondsRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thirtySecondsRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oneMinuteRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twoMinutesRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fourMinutesRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.labelLoading = new System.Windows.Forms.Label();
             this.noFocusCueButton1 = new SynoCam.NoFocusCueButton();
             this.buttonClose = new SynoCam.NoFocusCueButton();
             this.buttonMinimize = new SynoCam.NoFocusCueButton();
-            this.labelLoading = new System.Windows.Forms.Label();
-            this.viewEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenu.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -60,49 +60,56 @@ namespace SynoCam
             // refreshRateToolStripMenuItem
             // 
             this.refreshRateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nearRealtimeToolStripMenuItem,
-            this.secondsToolStripMenuItem,
-            this.minuteToolStripMenuItem,
-            this.minutesToolStripMenuItem,
-            this.minutesToolStripMenuItem1});
+            this.twoSecondsRefreshToolStripMenuItem,
+            this.thirtySecondsRefreshToolStripMenuItem,
+            this.oneMinuteRefreshToolStripMenuItem,
+            this.twoMinutesRefreshToolStripMenuItem,
+            this.fourMinutesRefreshToolStripMenuItem});
             this.refreshRateToolStripMenuItem.Name = "refreshRateToolStripMenuItem";
             this.refreshRateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.refreshRateToolStripMenuItem.Text = "Refresh Rate";
             // 
-            // nearRealtimeToolStripMenuItem
+            // twoSecondsRefreshToolStripMenuItem
             // 
-            this.nearRealtimeToolStripMenuItem.Name = "nearRealtimeToolStripMenuItem";
-            this.nearRealtimeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.nearRealtimeToolStripMenuItem.Text = "2 seconds";
-            this.nearRealtimeToolStripMenuItem.Click += new System.EventHandler(this.TwoSecondsToolStripMenuItemClick);
+            this.twoSecondsRefreshToolStripMenuItem.Name = "twoSecondsRefreshToolStripMenuItem";
+            this.twoSecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoSecondsRefreshToolStripMenuItem.Text = "2 seconds";
+            this.twoSecondsRefreshToolStripMenuItem.Click += new System.EventHandler(this.TwoSecondsToolStripMenuItemClick);
             // 
-            // secondsToolStripMenuItem
+            // thirtySecondsRefreshToolStripMenuItem
             // 
-            this.secondsToolStripMenuItem.Name = "secondsToolStripMenuItem";
-            this.secondsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.secondsToolStripMenuItem.Text = "30 seconds";
-            this.secondsToolStripMenuItem.Click += new System.EventHandler(this.ThirtySecondsToolStripMenuItemClick);
+            this.thirtySecondsRefreshToolStripMenuItem.Name = "thirtySecondsRefreshToolStripMenuItem";
+            this.thirtySecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.thirtySecondsRefreshToolStripMenuItem.Text = "30 seconds";
+            this.thirtySecondsRefreshToolStripMenuItem.Click += new System.EventHandler(this.ThirtySecondsToolStripMenuItemClick);
             // 
-            // minuteToolStripMenuItem
+            // oneMinuteRefreshToolStripMenuItem
             // 
-            this.minuteToolStripMenuItem.Name = "minuteToolStripMenuItem";
-            this.minuteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.minuteToolStripMenuItem.Text = "1 minute";
-            this.minuteToolStripMenuItem.Click += new System.EventHandler(this.OneMinuteToolStripMenuItemClick);
+            this.oneMinuteRefreshToolStripMenuItem.Name = "oneMinuteRefreshToolStripMenuItem";
+            this.oneMinuteRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oneMinuteRefreshToolStripMenuItem.Text = "1 minute";
+            this.oneMinuteRefreshToolStripMenuItem.Click += new System.EventHandler(this.OneMinuteToolStripMenuItemClick);
             // 
-            // minutesToolStripMenuItem
+            // twoMinutesRefreshToolStripMenuItem
             // 
-            this.minutesToolStripMenuItem.Name = "minutesToolStripMenuItem";
-            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.minutesToolStripMenuItem.Text = "2 minutes";
-            this.minutesToolStripMenuItem.Click += new System.EventHandler(this.TwoMinutesToolStripMenuItemClick);
+            this.twoMinutesRefreshToolStripMenuItem.Name = "twoMinutesRefreshToolStripMenuItem";
+            this.twoMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoMinutesRefreshToolStripMenuItem.Text = "2 minutes";
+            this.twoMinutesRefreshToolStripMenuItem.Click += new System.EventHandler(this.TwoMinutesToolStripMenuItemClick);
             // 
-            // minutesToolStripMenuItem1
+            // fourMinutesRefreshToolStripMenuItem
             // 
-            this.minutesToolStripMenuItem1.Name = "minutesToolStripMenuItem1";
-            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
-            this.minutesToolStripMenuItem1.Text = "4 minutes (default)";
-            this.minutesToolStripMenuItem1.Click += new System.EventHandler(this.FourMinutesToolStripMenuItemClick);
+            this.fourMinutesRefreshToolStripMenuItem.Name = "fourMinutesRefreshToolStripMenuItem";
+            this.fourMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fourMinutesRefreshToolStripMenuItem.Text = "4 minutes";
+            this.fourMinutesRefreshToolStripMenuItem.Click += new System.EventHandler(this.FourMinutesToolStripMenuItemClick);
+            // 
+            // viewEventsToolStripMenuItem
+            // 
+            this.viewEventsToolStripMenuItem.Name = "viewEventsToolStripMenuItem";
+            this.viewEventsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewEventsToolStripMenuItem.Text = "View Events";
+            this.viewEventsToolStripMenuItem.Click += new System.EventHandler(this.viewEventsToolStripMenuItem_Click);
             // 
             // panelControl
             // 
@@ -116,6 +123,16 @@ namespace SynoCam
             this.panelControl.Name = "panelControl";
             this.panelControl.Size = new System.Drawing.Size(14, 251);
             this.panelControl.TabIndex = 3;
+            // 
+            // labelLoading
+            // 
+            this.labelLoading.ForeColor = System.Drawing.Color.White;
+            this.labelLoading.Location = new System.Drawing.Point(221, 126);
+            this.labelLoading.Name = "labelLoading";
+            this.labelLoading.Size = new System.Drawing.Size(111, 15);
+            this.labelLoading.TabIndex = 4;
+            this.labelLoading.Text = "Loading, please wait..";
+            this.labelLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // noFocusCueButton1
             // 
@@ -172,23 +189,6 @@ namespace SynoCam
             this.buttonMinimize.UseVisualStyleBackColor = false;
             this.buttonMinimize.Click += new System.EventHandler(this.MinimizeButtonClick);
             // 
-            // labelLoading
-            // 
-            this.labelLoading.ForeColor = System.Drawing.Color.White;
-            this.labelLoading.Location = new System.Drawing.Point(221, 126);
-            this.labelLoading.Name = "labelLoading";
-            this.labelLoading.Size = new System.Drawing.Size(111, 15);
-            this.labelLoading.TabIndex = 4;
-            this.labelLoading.Text = "Loading, please wait..";
-            this.labelLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // viewEventsToolStripMenuItem
-            // 
-            this.viewEventsToolStripMenuItem.Name = "viewEventsToolStripMenuItem";
-            this.viewEventsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.viewEventsToolStripMenuItem.Text = "View Events";
-            this.viewEventsToolStripMenuItem.Click += new System.EventHandler(this.viewEventsToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.Black;
@@ -224,11 +224,11 @@ namespace SynoCam
         private Label labelLoading;
         private SynoCam.NoFocusCueButton noFocusCueButton1;
         private ToolStripMenuItem refreshRateToolStripMenuItem;
-        private ToolStripMenuItem nearRealtimeToolStripMenuItem;
-        private ToolStripMenuItem secondsToolStripMenuItem;
-        private ToolStripMenuItem minuteToolStripMenuItem;
-        private ToolStripMenuItem minutesToolStripMenuItem;
-        private ToolStripMenuItem minutesToolStripMenuItem1;
+        private ToolStripMenuItem twoSecondsRefreshToolStripMenuItem;
+        private ToolStripMenuItem thirtySecondsRefreshToolStripMenuItem;
+        private ToolStripMenuItem oneMinuteRefreshToolStripMenuItem;
+        private ToolStripMenuItem twoMinutesRefreshToolStripMenuItem;
+        private ToolStripMenuItem fourMinutesRefreshToolStripMenuItem;
         private ToolStripMenuItem viewEventsToolStripMenuItem;
     }
 }

@@ -63,7 +63,7 @@ namespace SynoCamLib
             return result != string.Empty;
         }
 
-        public async Task<List<CamUi>> GetCamsASync()
+        public async Task<List<CamUi>> GetCamsASync(int refreshRate)
         {
             var cams = new List<CamUi>();
 
@@ -90,7 +90,7 @@ namespace SynoCamLib
             foreach (var cam in listOfCams)
             {
                 var status = (CamStatus) cam["status"];
-                var realCam = new CamUi(cam["name"], status, cam["enabled"] && (status == CamStatus.Normal), GetCamImageUrl(cam["id"].ToString()));
+                var realCam = new CamUi(cam["name"], status, cam["enabled"] && (status == CamStatus.Normal), GetCamImageUrl(cam["id"].ToString()), refreshRate);
                 cams.Add(realCam);
             }
 

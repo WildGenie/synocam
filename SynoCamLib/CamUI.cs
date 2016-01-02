@@ -30,13 +30,13 @@ namespace SynoCamLib
 
         private readonly System.Timers.Timer _timer;
 
-        public CamUi(string camName, CamStatus status, bool enabled, string url, int defaultRefreshRateInMs = 240000)
+        public CamUi(string camName, CamStatus status, bool enabled, string url, int refreshRateInMs)
         {
             Url = url;
             Enabled = enabled;
             Status = status;
             CamName = camName;
-            _refreshInMiliseconds = defaultRefreshRateInMs;
+            _refreshInMiliseconds = refreshRateInMs;
 
             SizeMode = PictureBoxSizeMode.Zoom;
             Click += OnClick;
