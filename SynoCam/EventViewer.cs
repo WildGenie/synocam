@@ -50,6 +50,21 @@ namespace SynoCam
             if (eventView.SelectedItems.Count == 1)
             {
                 snapshotBox.Image = camEvents[eventView.SelectedItems[0].Index].SnapShot;
+                streamVideoButton.Visible = true;
+            }
+            else
+            {
+                streamVideoButton.Visible = false;
+            }
+        }
+
+        private void StreamVideoButtonClick(object sender, EventArgs e)
+        {
+            if (eventView.SelectedItems.Count == 1)
+            {
+                var camEvent = camEvents[eventView.SelectedItems[0].Index];
+                var download = new DownloadProgress();
+                download.ShowDialog(_synoCommand, camEvent);
             }
         }
     }

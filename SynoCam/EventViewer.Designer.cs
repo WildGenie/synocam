@@ -35,6 +35,7 @@ namespace SynoCam
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.snapshotBox = new System.Windows.Forms.PictureBox();
+            this.streamVideoButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.snapshotBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,11 +80,23 @@ namespace SynoCam
             this.snapshotBox.TabIndex = 1;
             this.snapshotBox.TabStop = false;
             // 
+            // streamVideoButton
+            // 
+            this.streamVideoButton.Location = new System.Drawing.Point(420, 210);
+            this.streamVideoButton.Name = "streamVideoButton";
+            this.streamVideoButton.Size = new System.Drawing.Size(87, 23);
+            this.streamVideoButton.TabIndex = 2;
+            this.streamVideoButton.Text = "Play video";
+            this.streamVideoButton.UseVisualStyleBackColor = true;
+            this.streamVideoButton.Visible = false;
+            this.streamVideoButton.Click += new System.EventHandler(this.StreamVideoButtonClick);
+            // 
             // EventViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 324);
+            this.Controls.Add(this.streamVideoButton);
             this.Controls.Add(this.snapshotBox);
             this.Controls.Add(this.eventView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -103,6 +116,7 @@ namespace SynoCam
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.PictureBox snapshotBox;
+        private System.Windows.Forms.Button streamVideoButton;
 
     }
 }

@@ -237,7 +237,8 @@ namespace SynoCam
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-           _synoCommand.LogoutASync().Wait(1000);
+           var disconnectWait = new Disconnect(_synoCommand);
+            disconnectWait.ShowDialog(this);
         }
 
         private void CloseButtonClick(object sender, EventArgs e)

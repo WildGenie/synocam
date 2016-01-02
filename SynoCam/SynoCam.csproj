@@ -64,6 +64,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Disconnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Disconnect.Designer.cs">
+      <DependentUpon>Disconnect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DownloadProgress.Designer.cs">
+      <DependentUpon>DownloadProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +93,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Disconnect.resx">
+      <DependentUpon>Disconnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownloadProgress.resx">
+      <DependentUpon>DownloadProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EventViewer.resx">
       <DependentUpon>EventViewer.cs</DependentUpon>
     </EmbeddedResource>

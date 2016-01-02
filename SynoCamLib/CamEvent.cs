@@ -9,15 +9,19 @@ namespace SynoCamLib
         private readonly string _snapShot;
         private Image _snapShotImage;
 
-        public CamEvent(string camName, DateTime startTime, DateTime stopTime, EventReason reason, string snapshotData)
+        public CamEvent(int id, string name, string camName, DateTime startTime, DateTime stopTime, EventReason reason, string snapshotData)
         {
+            Name = name;
             CamName = camName;
             Reason = reason;
             _snapShot = snapshotData;
             StartTime = startTime;
             StopTime = stopTime;
+            Id = id;
         }
 
+        public int Id { get; private set; }
+        public string Name { get; private set; }
         public string CamName { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime StopTime { get; private set; }
