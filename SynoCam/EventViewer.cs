@@ -33,7 +33,7 @@ namespace SynoCam
             {
                 eventView.Invoke(new Action(() =>
                 {                  
-                    eventView.Items.Add(new ListViewItem(new[] {camEvent.StartTime.ToString(), camEvent.CamName, camEvent.Reason.ToString() }));
+                    eventView.Items.Add(new ListViewItem(new[] {camEvent.StartTime.ToString(), (camEvent.StopTime - camEvent.StartTime).ToString("h\\:mm\\:ss"), camEvent.CamName, camEvent.Reason.ToString() }));
                 }));
             }
 

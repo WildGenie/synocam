@@ -32,6 +32,7 @@ namespace SynoCam
         {
             this.eventView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.snapshotBox = new System.Windows.Forms.PictureBox();
@@ -43,6 +44,7 @@ namespace SynoCam
             // 
             this.eventView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
+            this.columnHeader4,
             this.columnHeader2,
             this.columnHeader3});
             this.eventView.FullRowSelect = true;
@@ -60,6 +62,10 @@ namespace SynoCam
             this.columnHeader1.Text = "Start";
             this.columnHeader1.Width = 110;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Duration";
+            // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Camera name";
@@ -72,11 +78,11 @@ namespace SynoCam
             // 
             // snapshotBox
             // 
-            this.snapshotBox.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.snapshotBox.BackColor = System.Drawing.SystemColors.Control;
             this.snapshotBox.Location = new System.Drawing.Point(420, 12);
             this.snapshotBox.Name = "snapshotBox";
             this.snapshotBox.Size = new System.Drawing.Size(229, 192);
-            this.snapshotBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.snapshotBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.snapshotBox.TabIndex = 1;
             this.snapshotBox.TabStop = false;
             // 
@@ -117,6 +123,6 @@ namespace SynoCam
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.PictureBox snapshotBox;
         private System.Windows.Forms.Button streamVideoButton;
-
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
