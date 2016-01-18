@@ -17,7 +17,7 @@ namespace SynoCam
             InitializeComponent();
         }
 
-        public void ShowDialog(SynoCommand synoCommand, CamEvent camEvent)
+        public void ShowDialog(SynoCommand synoCommand, ICamEvent camEvent)
         {
             _filePath = synoCommand.DownloadEvent(camEvent, FileDownloadCompleted, ProgressChanged);
             ShowDialog();

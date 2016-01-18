@@ -49,13 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cam.cs" />
     <Compile Include="CamEvent.cs" />
-    <Compile Include="CamUI.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CamStatus.cs" />
     <Compile Include="EventReason.cs" />
     <Compile Include="HttpRequest.cs" />
+    <Compile Include="ICam.cs" />
+    <Compile Include="ICamEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SynoCommand.cs" />
   </ItemGroup>

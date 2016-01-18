@@ -8,13 +8,13 @@ namespace SynoCam
 {
     public partial class EventViewer : Form
     {
-        private List<CamEvent> camEvents; 
+        private List<ICamEvent> _camEvents; 
         private SynoCommand _synoCommand;
 
         public EventViewer()
         {
             InitializeComponent();
-            this.Shown += OnShown;
+            Shown += OnShown;
         }
 
         public void ShowDialog(SynoCommand command)
@@ -37,7 +37,7 @@ namespace SynoCam
                 }));
             }
 
-            camEvents = events.ToList(); // Save for later use
+            _camEvents = events.ToList(); // Save for later use
         }
 
         private void OnShown(object sender, EventArgs eventArgs)
@@ -49,7 +49,7 @@ namespace SynoCam
         {
             if (eventView.SelectedItems.Count == 1)
             {
-                snapshotBox.Image = camEvents[eventView.SelectedItems[0].Index].SnapShot;
+                snapshotBox.Image = _camEvents[eventView.SelectedItems[0].Index].SnapShot;
                 streamVideoButton.Visible = true;
             }
             else
@@ -62,7 +62,7 @@ namespace SynoCam
         {
             if (eventView.SelectedItems.Count == 1)
             {
-                var camEvent = camEvents[eventView.SelectedItems[0].Index];
+                var camEvent = _camEvents[eventView.SelectedItems[0].Index];
                 var download = new DownloadProgress();
                 download.ShowDialog(_synoCommand, camEvent);
             }

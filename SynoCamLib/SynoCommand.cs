@@ -82,9 +82,9 @@ namespace SynoCamLib
             return true;
         }
 
-        public async Task<List<CamUi>> GetCamsASync(int refreshRate)
+        public async Task<List<ICam>> GetCamsASync()
         {
-            var cams = new List<CamUi>();
+            var cams = new List<ICam>();
 
             if (_sessionId == null)
             {
@@ -109,7 +109,7 @@ namespace SynoCamLib
             foreach (var cam in listOfCams)
             {
                 var status = (CamStatus) cam["status"];
-                var realCam = new CamUi(cam["name"], status, cam["enabled"] && (status == CamStatus.Normal), GetCamImageUrl(cam["id"].ToString()), refreshRate);
+                var realCam = new Cam(cam["name"], status, cam["enabled"] && (status == CamStatus.Normal), GetCamImageUrl(cam["id"].ToString()));
                 cams.Add(realCam);
             }
 
@@ -141,7 +141,7 @@ namespace SynoCamLib
             return httpRequest.GetUrl(_url + "entry.cgi");
         }
 
-        public async Task<IEnumerable<CamEvent>> QueryCamEvents()
+        public async Task<IEnumerable<ICamEvent>> QueryCamEvents()
         {
             var events = new List<CamEvent>();
 
@@ -190,7 +190,7 @@ namespace SynoCamLib
         //    return "";
         //}
         
-        public string DownloadEvent(CamEvent camEvent, AsyncCompletedEventHandler fileDownloadCompleted, DownloadProgressChangedEventHandler progressChanged)
+        public string DownloadEvent(ICamEvent camEvent, AsyncCompletedEventHandler fileDownloadCompleted, DownloadProgressChangedEventHandler progressChanged)
         {
             string tempPath = Path.GetTempPath();
 

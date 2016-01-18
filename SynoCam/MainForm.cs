@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -203,7 +204,9 @@ namespace SynoCam
         {
             bool result = false;
 
-            _cams = await _synoCommand.GetCamsASync(Ms4Minutes);
+            List<ICam> results = await _synoCommand.GetCamsASync();
+            _cams = results.Select(c => new CamUi(c, Ms4Minutes)).ToList();
+
             foreach (var cam in _cams)
             {
                 CamUi cam1 = cam;

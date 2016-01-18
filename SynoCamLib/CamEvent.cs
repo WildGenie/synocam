@@ -4,7 +4,7 @@ using System.IO;
 
 namespace SynoCamLib
 {
-    public class CamEvent
+    internal class CamEvent : ICamEvent
     {
         private readonly string _snapShot;
         private Image _snapShotImage;
@@ -20,12 +20,12 @@ namespace SynoCamLib
             Id = id;
         }
 
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string CamName { get; private set; }
-        public DateTime StartTime { get; private set; }
-        public DateTime StopTime { get; private set; }
-        public EventReason Reason { get; private set; }
+        public int Id { get; }
+        public string Name { get; }
+        public string CamName { get; }
+        public DateTime StartTime { get; }
+        public DateTime StopTime { get; }
+        public EventReason Reason { get; }
 
 
         public Image SnapShot

@@ -3,17 +3,14 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
+using SynoCamLib;
 
-namespace SynoCamLib
+namespace SynoCam
 {
     public sealed class CamUi : PictureBox
     {
         private bool _showRedDot;
-
-        public string CamName { get; private set; }
-        public CamStatus Status { get; private set; }
-        public new bool Enabled { get; private set; }
-        public string Url { get; private set; }
+        private readonly ICam _camera;
 
         private int _refreshInMiliseconds;
         public int RefreshInMiliseconds
@@ -30,12 +27,9 @@ namespace SynoCamLib
 
         private readonly System.Timers.Timer _timer;
 
-        public CamUi(string camName, CamStatus status, bool enabled, string url, int refreshRateInMs)
+        public CamUi(ICam cam, int refreshRateInMs)
         {
-            Url = url;
-            Enabled = enabled;
-            Status = status;
-            CamName = camName;
+            _camera = cam;
             _refreshInMiliseconds = refreshRateInMs;
 
             SizeMode = PictureBoxSizeMode.Zoom;
@@ -73,7 +67,7 @@ namespace SynoCamLib
 
         public void GetPictureNow()
         {
-            LoadAsync(Url);
+            LoadAsync(_camera.Url);
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -81,7 +75,7 @@ namespace SynoCamLib
             if ((int)_timer.Interval == 1) // The first refresh of camera images should be fast, after that the normale refresh rate should be used
                 RefreshInMiliseconds = _refreshInMiliseconds;
 
-            LoadAsync(Url);
+            LoadAsync(_camera.Url);
         }
     }
 }
