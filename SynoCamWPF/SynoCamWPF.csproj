@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,8 +56,10 @@
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
     <Compile Include="CamControl.cs" />
-    <Compile Include="CameraViewsContext.cs" />
     <Compile Include="RefreshRate.cs" />
+    <Compile Include="Converters\DivideByTwoConverter.cs" />
+    <Compile Include="Utilities\CustomCommand.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +106,7 @@
       <Name>SynoCamLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
