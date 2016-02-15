@@ -13,29 +13,20 @@ namespace SynoCamWPF
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-        
-        private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            CloseButton.Visibility = Visibility.Visible;
-            RefreshButton.Visibility = Visibility.Visible;
-            MinimizeButton.Visibility = Visibility.Visible;
-        }
-
-        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            CloseButton.Visibility = Visibility.Hidden;
-            RefreshButton.Visibility = Visibility.Hidden;
-            MinimizeButton.Visibility = Visibility.Hidden;
-        }
-
         private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void MinimizeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }

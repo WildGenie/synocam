@@ -24,10 +24,10 @@ namespace SynoCamWPF.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         
         private ObservableCollection<CamControl> _cameraViews;
-        private int _width;
-        private int _height;
-        private int _left;
-        private int _top;
+        private int _windowWidth;
+        private int _windowHeight;
+        private int _windowLeft;
+        private int _windowsTop;
         private Visibility _windowControlClose;
         private Visibility _windowControlMinimize;
         private Visibility _windowControlRefresh;
@@ -37,28 +37,31 @@ namespace SynoCamWPF.ViewModels
             get{ return _cameraViews; }
             set{ _cameraViews = value; OnPropertyChanged(); }
         }
-        public int Width
+
+        public int NumberOfCameras => CameraViews.Count;
+
+        public int WindowWidth
         {
-            get { return _width; }
-            set { _width = value; OnPropertyChanged(); }
+            get { return _windowWidth; }
+            set { _windowWidth = value; OnPropertyChanged(); }
         }
 
-        public int Height
+        public int WindowHeight
         {
-            get { return _height; }
-            set { _height = value; OnPropertyChanged(); }
+            get { return _windowHeight; }
+            set { _windowHeight = value; OnPropertyChanged(); }
         }
 
-        public int Left
+        public int WindowLeft
         {
-            get { return _left; }
-            set { _left = value; OnPropertyChanged(); }
+            get { return _windowLeft; }
+            set { _windowLeft = value; OnPropertyChanged(); }
         }
 
-        public int Top
+        public int WindowsTop
         {
-            get { return _top; }
-            set { _top = value; OnPropertyChanged(); }
+            get { return _windowsTop; }
+            set { _windowsTop = value; OnPropertyChanged(); }
         }
 
         public Visibility WindowControlClose
@@ -81,6 +84,11 @@ namespace SynoCamWPF.ViewModels
 
         public ICommand ShowWindowControls { get; set; }
         public ICommand HideWindowControls { get; set; }
+
+        public ICommand WindowClosePressed { get; set; }
+        public ICommand WindowRefreshPressed { get; set; }
+
+        public ICommand OpenConfigDialog { get; set; }
 
         private string Url
         {
@@ -108,7 +116,40 @@ namespace SynoCamWPF.ViewModels
             ShowWindowControls = new CustomCommand(o => { WindowControlClose = Visibility.Visible; WindowControlMinimize = Visibility.Visible; WindowControlRefresh = Visibility.Visible; }, o => true);
             HideWindowControls = new CustomCommand(o => { WindowControlClose = Visibility.Hidden; WindowControlMinimize = Visibility.Hidden; WindowControlRefresh = Visibility.Hidden; }, o => true);
 
+            OpenConfigDialog = new CustomCommand(OpenConfigWindow, o => true);
+
+            WindowClosePressed = new CustomCommand(CloseWindow, o => true);
+            WindowRefreshPressed = new CustomCommand(RefreshCamImagesNow, o => true);
+
             LoadData();
+        }
+
+        private void OpenConfigWindow(object o)
+        {
+
+        }
+
+        private void RefreshCamImagesNow(object o)
+        {
+            foreach (var camView in CameraViews)
+            {
+                camView.TryRefreshCamImage();
+            }
+        }
+
+        private void CloseWindow(object o)
+        {
+            SaveSettings();
+            Application.Current.Shutdown(0);
+        }
+
+        private void SaveSettings()
+        {
+            Settings.Default.WindowTop = WindowsTop;
+            Settings.Default.WindowLeft = WindowLeft;
+            Settings.Default.WindowHeight = WindowHeight;
+            Settings.Default.WindowWidth = WindowWidth;
+            Settings.Default.Save();
         }
 
         private void LoadData()
@@ -118,10 +159,18 @@ namespace SynoCamWPF.ViewModels
                 Settings.Default.WindowHeight > 0 ||
                 Settings.Default.WindowWidth > 0)
             {
-                Top = Settings.Default.WindowTop;
-                Left = Settings.Default.WindowLeft;
-                Height = Settings.Default.WindowHeight;
-                Width = Settings.Default.WindowWidth;
+                WindowsTop = Settings.Default.WindowTop;
+                WindowLeft = Settings.Default.WindowLeft;
+                WindowHeight = Settings.Default.WindowHeight;
+                WindowWidth = Settings.Default.WindowWidth;
+            }
+            else
+            {
+                // Default settings
+                WindowsTop = 200;
+                WindowLeft = 200;
+                WindowHeight = 150;
+                WindowWidth = 300;
             }
 
             Address = Settings.Default.ServerIpOrDns;
@@ -136,8 +185,10 @@ namespace SynoCamWPF.ViewModels
             }
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
-            SynoCommand = new SynoCommand(Url, Username, Password);
 
+            // Decide if we want the demo mode or live
+            SynoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
+            
             LoadCameras();
         }
 
@@ -146,14 +197,11 @@ namespace SynoCamWPF.ViewModels
             try
             {
                 var result = await SynoCommand.GetCamsASync();
-                CameraViews = new ObservableCollection<CamControl>(result.Select(c => new CamControl(c, RefreshRate.Ms4Minutes)).ToList());
-
-                // LabelLoading.Visibility = Visibility.Hidden;
+                CameraViews = new ObservableCollection<CamControl>(result.Select(c => new CamControl(c, RefreshRate.Ms30Seconds)).ToList());
             }
             catch (Exception ex)
             {
-                // LabelLoading.Text = string.Format(@"Unable to load cameras, error: " + Environment.NewLine + "{0}", ex.Message);
-                //LabelLoading.Foreground = Brushes.IndianRed;
+                MessageBox.Show(string.Format("Unable to load cameras, error: " + Environment.NewLine + "{0}", ex.Message));
             }
         }
 

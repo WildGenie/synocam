@@ -4,6 +4,6 @@
              xmlns:converters="clr-namespace:SynoCamWPF.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <converters:DivideByTwoConverter x:Key="DivideByTwo" />
+        <converters:DivideByNumberConverter x:Key="DivideByNumber"></converters:DivideByNumberConverter>
     </Application.Resources>
 </Application>

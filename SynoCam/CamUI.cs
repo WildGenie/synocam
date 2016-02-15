@@ -26,6 +26,7 @@ namespace SynoCam
         }
 
         private readonly System.Timers.Timer _timer;
+        public EventHandler ImageLoaded { get; set; }
 
         public CamUi(ICam cam, int refreshRateInMs)
         {
@@ -41,8 +42,18 @@ namespace SynoCam
             _timer.Elapsed += TimerOnElapsed;
             _timer.Start();
 
-            LoadCompleted += OnLoadCompleted;
+            ImageLoaded += OnLoadCompleted;
             Paint += OnPaint;
+
+            _camera.ImageChangedEvent += ImageChangedEvent;
+        }
+
+        private void ImageChangedEvent(object sender, EventArgs eventArgs)
+        {
+            Image = Image.FromStream(_camera.CamImageData);
+            
+            if (ImageLoaded != null)
+                ImageLoaded.Invoke(this, EventArgs.Empty);
         }
 
         private void OnPaint(object sender, PaintEventArgs paintEventArgs)
@@ -55,7 +66,7 @@ namespace SynoCam
             paintEventArgs.Graphics.DrawRectangle(pen, rect);
         }
 
-        private void OnLoadCompleted(object sender, AsyncCompletedEventArgs e)
+        private void OnLoadCompleted(object sender, EventArgs e)
         {
             _showRedDot = !_showRedDot;
         }
@@ -67,7 +78,7 @@ namespace SynoCam
 
         public void GetPictureNow()
         {
-            LoadAsync(_camera.Url);
+            _camera.TryRefreshCamImage();
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -75,7 +86,7 @@ namespace SynoCam
             if ((int)_timer.Interval == 1) // The first refresh of camera images should be fast, after that the normale refresh rate should be used
                 RefreshInMiliseconds = _refreshInMiliseconds;
 
-            LoadAsync(_camera.Url);
+            GetPictureNow();
         }
     }
 }

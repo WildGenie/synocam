@@ -2,31 +2,31 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SynoCamWPF.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ServerIpOrDns" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">home.wiering.cc</Value>
+    <Setting Name="ServerIpOrDns" Type="System.String" Scope="User">
+      <Value Profile="(Default)">server.domain.com</Value>
     </Setting>
-    <Setting Name="UseHttps" Type="System.Boolean" Scope="Application">
+    <Setting Name="UseHttps" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Username" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">download</Value>
+    <Setting Name="Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">user</Value>
     </Setting>
-    <Setting Name="Password" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">hiZYTTayNb6Td</Value>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">password</Value>
     </Setting>
-    <Setting Name="Port" Type="System.String" Scope="Application">
+    <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">443</Value>
     </Setting>
-    <Setting Name="WindowTop" Type="System.Int32" Scope="Application">
+    <Setting Name="WindowTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="WindowLeft" Type="System.Int32" Scope="Application">
+    <Setting Name="WindowLeft" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="WindowHeight" Type="System.Int32" Scope="Application">
+    <Setting Name="WindowHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="WindowWidth" Type="System.Int32" Scope="Application">
+    <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

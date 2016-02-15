@@ -70,7 +70,7 @@ namespace SynoCam
             }
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
-            _synoCommand = new SynoCommand(Url, Username, Password);
+            _synoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
 
             labelLoading.MouseDown += MainFormMouseDown;
             labelLoading.DoubleClick += MainFormDoubleClick;
@@ -209,20 +209,20 @@ namespace SynoCam
 
             foreach (var cam in _cams)
             {
-                CamUi cam1 = cam;
-                cam1.MouseDown += MainFormMouseDown;
-                cam1.DoubleClick += MainFormDoubleClick;
-                cam1.LoadCompleted += cam_LoadCompleted;
-                cam1.Visible = false;
+                CamUi newCam = cam;
+                newCam.MouseDown += MainFormMouseDown;
+                newCam.DoubleClick += MainFormDoubleClick;
+                newCam.ImageLoaded += cam_LoadCompleted;
+                newCam.Visible = false;
                 
-                Invoke(new Action(() => Controls.Add(cam1)));
+                Invoke(new Action(() => Controls.Add(newCam)));
                 result = true;
             }
 
             return result;
         }
 
-        void cam_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void cam_LoadCompleted(object sender, EventArgs e)
         {
             Invoke((Action)delegate 
             { 
