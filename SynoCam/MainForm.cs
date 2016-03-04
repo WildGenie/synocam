@@ -69,7 +69,6 @@ namespace SynoCam
                 Port = ":" + Settings.Default.Port;
             }
 
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
             _synoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
 
             labelLoading.MouseDown += MainFormMouseDown;

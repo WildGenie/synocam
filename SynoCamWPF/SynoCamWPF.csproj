@@ -70,13 +70,24 @@
     <Compile Include="ConfigDialog.xaml.cs">
       <DependentUpon>ConfigDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigurationWindow.xaml.cs">
+      <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DivideByNumberConverter.cs" />
+    <Compile Include="Converters\RadioButtonCheckedConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RefreshRate.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities\CustomCommand.cs" />
+    <Compile Include="ViewModels\ConfigurationWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="ConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

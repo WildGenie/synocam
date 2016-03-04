@@ -11,12 +11,13 @@ namespace SynoCamWPF
     public class CamControl : INotifyPropertyChanged
     {
         private readonly ICam _cam;
+
         private RefreshRate _refreshRate;
         public string CamName => _cam.CamName;
         public CamStatus Status => _cam.Status;
         public bool Enabled => _cam.Enabled;
         public BitmapImage CamImage { get; private set; }
-
+        public bool ShowRedDot { get; set; }
 
         private Timer RefreshTimer { get; }
 
@@ -31,6 +32,9 @@ namespace SynoCamWPF
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
             bitmap.Freeze();
+
+            ShowRedDot = !ShowRedDot;
+            OnPropertyChanged(nameof(ShowRedDot));
 
             return bitmap;
         }

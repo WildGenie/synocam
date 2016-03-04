@@ -5,5 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <converters:DivideByNumberConverter x:Key="DivideByNumber"></converters:DivideByNumberConverter>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></converters:BoolToVisibilityConverter>
+        <converters:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter"></converters:RadioButtonCheckedConverter>
     </Application.Resources>
 </Application>

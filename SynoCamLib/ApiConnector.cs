@@ -20,8 +20,12 @@ namespace SynoCamLib
 
         private readonly List<string> _deleteFilesBeforeExit = new List<string>();
 
-        public ApiConnector(string url, string username, string password)
+        public ApiConnector(string url, string username, string password, bool forceCorrectCertificate = false)
         {
+            // Many home servers do not have a valid certificate, do not check unless requested
+            if (!forceCorrectCertificate)
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
+
             _url = url;
             _username = username;
             _password = password;

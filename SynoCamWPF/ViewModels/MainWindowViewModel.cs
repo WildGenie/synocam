@@ -2,12 +2,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using SynoCamLib;
-using SynoCamWPF.Properties;
+using SynoCamWPF.Services;
 using SynoCamWPF.Utilities;
 
 namespace SynoCamWPF.ViewModels
@@ -108,8 +107,11 @@ namespace SynoCamWPF.ViewModels
             }
         }
 
+        public RefreshRate RefreshRate { get; set; }
+
         public MainWindowViewModel()
         {
+            RefreshRate = RefreshRate.Ms30Seconds;
             WindowControlClose = Visibility.Hidden;
             WindowControlMinimize = Visibility.Hidden;
             WindowControlRefresh = Visibility.Hidden;
@@ -124,9 +126,29 @@ namespace SynoCamWPF.ViewModels
             LoadData();
         }
 
+        private void LoadData()
+        {
+            WindowsTop = ConfigurationService.Instance.WindowsTop;
+            WindowLeft = ConfigurationService.Instance.WindowLeft;
+            WindowHeight = ConfigurationService.Instance.WindowHeight;
+            WindowWidth = ConfigurationService.Instance.WindowWidth;
+            Address = ConfigurationService.Instance.Address;
+            UseHttps = ConfigurationService.Instance.UseHttps;
+            Username = ConfigurationService.Instance.Username;
+            Password = ConfigurationService.Instance.Password;
+            RefreshRate = ConfigurationService.Instance.RefreshRate;
+            Port = ConfigurationService.Instance.Port;
+
+            // Decide if we want the demo mode or live
+            SynoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
+
+            LoadCameras();
+        }
+
         private void OpenConfigWindow(object o)
         {
-
+            ConfigurationWindow configWindow = new ConfigurationWindow();
+            configWindow.ShowDialog();
         }
 
         private void RefreshCamImagesNow(object o)
@@ -139,57 +161,8 @@ namespace SynoCamWPF.ViewModels
 
         private void CloseWindow(object o)
         {
-            SaveSettings();
+            ConfigurationService.Instance.SaveSettings();
             Application.Current.Shutdown(0);
-        }
-
-        private void SaveSettings()
-        {
-            Settings.Default.WindowTop = WindowsTop;
-            Settings.Default.WindowLeft = WindowLeft;
-            Settings.Default.WindowHeight = WindowHeight;
-            Settings.Default.WindowWidth = WindowWidth;
-            Settings.Default.Save();
-        }
-
-        private void LoadData()
-        {
-            if (Settings.Default.WindowTop > 0 ||
-                Settings.Default.WindowLeft > 0 ||
-                Settings.Default.WindowHeight > 0 ||
-                Settings.Default.WindowWidth > 0)
-            {
-                WindowsTop = Settings.Default.WindowTop;
-                WindowLeft = Settings.Default.WindowLeft;
-                WindowHeight = Settings.Default.WindowHeight;
-                WindowWidth = Settings.Default.WindowWidth;
-            }
-            else
-            {
-                // Default settings
-                WindowsTop = 200;
-                WindowLeft = 200;
-                WindowHeight = 150;
-                WindowWidth = 300;
-            }
-
-            Address = Settings.Default.ServerIpOrDns;
-            UseHttps = Settings.Default.UseHttps;
-            Username = Settings.Default.Username;
-            Password = Settings.Default.Password;
-            Port = "";
-
-            if (!string.IsNullOrEmpty(Settings.Default.Port))
-            {
-                Port = ":" + Settings.Default.Port;
-            }
-
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => true;
-
-            // Decide if we want the demo mode or live
-            SynoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
-            
-            LoadCameras();
         }
 
         private async void LoadCameras()
@@ -197,7 +170,7 @@ namespace SynoCamWPF.ViewModels
             try
             {
                 var result = await SynoCommand.GetCamsASync();
-                CameraViews = new ObservableCollection<CamControl>(result.Select(c => new CamControl(c, RefreshRate.Ms30Seconds)).ToList());
+                CameraViews = new ObservableCollection<CamControl>(result.Select(c => new CamControl(c, RefreshRate)).ToList());
             }
             catch (Exception ex)
             {
