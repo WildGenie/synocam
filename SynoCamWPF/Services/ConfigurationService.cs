@@ -1,4 +1,5 @@
-﻿using SynoCamWPF.Properties;
+﻿using System.Configuration;
+using SynoCamWPF.Properties;
 
 namespace SynoCamWPF.Services
 {
@@ -31,6 +32,11 @@ namespace SynoCamWPF.Services
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.RefreshRate = (int)RefreshRate;
             Settings.Default.Save();
+        }
+
+        internal string GetConfigurationFilePath()
+        {
+            return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
         }
 
         private void LoadData()

@@ -1,7 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using SynoCamWPF.Annotations;
 using SynoCamWPF.Services;
+using SynoCamWPF.Utilities;
 
 namespace SynoCamWPF.ViewModels
 {
@@ -50,7 +55,21 @@ namespace SynoCamWPF.ViewModels
             Username = ConfigurationService.Instance.Username;
             Password = ConfigurationService.Instance.Password;
             Port = ConfigurationService.Instance.Port;
+
+            OpenConfigurationFile = new CustomCommand(OpenConfigFile, o => true);
         }
+
+        private void OpenConfigFile(object o)
+        {
+            var directoryInfo = new FileInfo(ConfigurationService.Instance.GetConfigurationFilePath()).Directory;
+            if (directoryInfo == null)
+                return;
+
+            var directory = directoryInfo.FullName;
+            Process.Start(directory);
+        }
+
+        public ICommand OpenConfigurationFile { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
