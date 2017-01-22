@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using SynoCamWPF.Properties;
+using System;
 
 namespace SynoCamWPF.Services
 {
@@ -12,11 +13,9 @@ namespace SynoCamWPF.Services
         public int WindowHeight { get; set; }
         public int WindowWidth { get; set; }
         public RefreshRate RefreshRate { get; set; }
-        public string Port { get; set; }
         public string Password { get; set; }
         public string Username { get; set; }
-        public bool UseHttps { get; set; }
-        public string Address { get; set; }
+        public Uri Address { get; set; }
 
         private ConfigurationService()
         {
@@ -31,6 +30,9 @@ namespace SynoCamWPF.Services
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.RefreshRate = (int)RefreshRate;
+            Settings.Default.Address = Address;
+            Settings.Default.Username = Username;
+            Settings.Default.Password = Password;
             Settings.Default.Save();
         }
 
@@ -60,17 +62,10 @@ namespace SynoCamWPF.Services
                 WindowWidth = 300;
             }
 
-            Address = Settings.Default.ServerIpOrDns;
-            UseHttps = Settings.Default.UseHttps;
+            Address = Settings.Default.Address;
             Username = Settings.Default.Username;
             Password = Settings.Default.Password;
             RefreshRate = (RefreshRate)Settings.Default.RefreshRate;
-            Port = "";
-
-            if (!string.IsNullOrEmpty(Settings.Default.Port))
-            {
-                Port = ":" + Settings.Default.Port;
-            }
         }
     }
 }

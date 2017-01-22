@@ -6,13 +6,9 @@
         xmlns:local="clr-namespace:SynoCamWPF"
         xmlns:viewModels="clr-namespace:SynoCamWPF.ViewModels"
         mc:Ignorable="d"
-        Title="ConfigurationWindow" Height="300" Width="300" ResizeMode="NoResize" WindowStyle="ToolWindow">
-    <Window.DataContext>
-        <viewModels:ConfigurationWindowViewModel />
-    </Window.DataContext>
-    <Grid Background="DarkGray">
+        Title="ConfigurationWindow" Height="165" Width="336" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Grid Width="Auto" Margin="21,15,4,-15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -23,17 +19,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">Address</Label>
-        <TextBox Text="{Binding Address}" Grid.Row="0" Grid.Column="1"></TextBox>
-        <Label Grid.Row="1" Grid.Column="0">Use Https</Label>
-        <CheckBox IsChecked="{Binding UseHttps}" Grid.Row="1" Grid.Column="1"></CheckBox>
-        <Label Grid.Row="2" Grid.Column="0">Port</Label>
-        <TextBox Text="{Binding Port}" Grid.Row="2" Grid.Column="1"></TextBox>
-        <Label Grid.Row="3" Grid.Column="0">Username</Label>
-        <TextBox Text="{Binding Username}" Grid.Row="3" Grid.Column="1"></TextBox>
-        <Label Grid.Row="4" Grid.Column="0">Password</Label>
-        <!--<PasswordBox Password="{Binding Password}" Grid.Row="4" Grid.Column="1"></PasswordBox>-->
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Width="64">Address</Label>
+        <TextBox Text="{Binding Address}" Grid.Row="0" Grid.Column="1" Margin="0,0,-221,0"></TextBox>
+        <Label Grid.Row="1" Grid.Column="0">Username</Label>
+        <TextBox Text="{Binding Username}" Grid.Row="1" Grid.Column="1" Margin="0,0,-221,0"></TextBox>
+        <Label Grid.Row="2" Grid.Column="0">Password</Label>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="2" Grid.Column="1" Margin="0,0,-221,0"></PasswordBox>
 
-        <Button Grid.ColumnSpan="2" Grid.Row="5" Content="Open configuration file" Command="{Binding OpenConfigurationFile}"></Button>
+        <Button Grid.Row="4" Content="Save" Command="{Binding SaveConfigFile}" CommandParameter="{Binding ElementName=PasswordBox}" Grid.Column="1" Margin="156,6,-221,-6"/>
     </Grid>
 </Window>

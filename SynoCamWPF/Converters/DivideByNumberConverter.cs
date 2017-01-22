@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace SynoCamWPF.Converters
 {
-    class DivideByNumberConverter : IMultiValueConverter
+    public class DivideByNumberConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

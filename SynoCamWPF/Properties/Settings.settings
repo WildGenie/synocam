@@ -2,20 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SynoCamWPF.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ServerIpOrDns" Type="System.String" Scope="User">
-      <Value Profile="(Default)">server.domain.com</Value>
-    </Setting>
-    <Setting Name="UseHttps" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="Address" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)">https://server.domain.com:5001/</Value>
     </Setting>
     <Setting Name="Username" Type="System.String" Scope="User">
       <Value Profile="(Default)">user</Value>
     </Setting>
     <Setting Name="Password" Type="System.String" Scope="User">
       <Value Profile="(Default)">password</Value>
-    </Setting>
-    <Setting Name="Port" Type="System.String" Scope="User">
-      <Value Profile="(Default)">443</Value>
     </Setting>
     <Setting Name="WindowTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

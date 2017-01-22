@@ -7,22 +7,14 @@ using System.Windows.Input;
 using SynoCamWPF.Annotations;
 using SynoCamWPF.Services;
 using SynoCamWPF.Utilities;
+using System.Windows.Controls;
 
 namespace SynoCamWPF.ViewModels
 {
     public class ConfigurationWindowViewModel : INotifyPropertyChanged
     {
-        private string _password;
         private string _username;
-        private bool _useHttps;
-        private string _address;
-        private string _port;
-
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; OnPropertyChanged(); }
-        }
+        private Uri _address;
 
         public string Username
         {
@@ -30,46 +22,38 @@ namespace SynoCamWPF.ViewModels
             set { _username = value; OnPropertyChanged(); }
         }
 
-        public bool UseHttps
-        {
-            get { return _useHttps; }
-            set { _useHttps = value; OnPropertyChanged(); }
-        }
-
         public string Address
         {
-            get { return _address; }
-            set { _address = value; OnPropertyChanged(); }
-        }
-
-        public string Port
-        {
-            get { return _port; }
-            set { _port = value; OnPropertyChanged(); }
+            get { return _address.AbsoluteUri; }
+            set { _address = new Uri(value, UriKind.Absolute); OnPropertyChanged(); }
         }
 
         public ConfigurationWindowViewModel()
         {
-            Address = ConfigurationService.Instance.Address;
-            UseHttps = ConfigurationService.Instance.UseHttps;
+            _address = ConfigurationService.Instance.Address; OnPropertyChanged("Address");
             Username = ConfigurationService.Instance.Username;
-            Password = ConfigurationService.Instance.Password;
-            Port = ConfigurationService.Instance.Port;
 
-            OpenConfigurationFile = new CustomCommand(OpenConfigFile, o => true);
+            SaveConfigFile = new CustomCommand((password) => 
+            {
+                ConfigurationService.Instance.Address = _address;
+                ConfigurationService.Instance.Username = _username;
+                ConfigurationService.Instance.Password = (password as PasswordBox).Password;
+                ConfigurationService.Instance.SaveSettings();
+            }, (o) => true);
         }
 
-        private void OpenConfigFile(object o)
-        {
-            var directoryInfo = new FileInfo(ConfigurationService.Instance.GetConfigurationFilePath()).Directory;
-            if (directoryInfo == null)
-                return;
+        //private void OpenConfigFile(object o)
+        //{
+        //    var directoryInfo = new FileInfo(ConfigurationService.Instance.GetConfigurationFilePath()).Directory;
+        //    if (directoryInfo == null)
+        //        return;
 
-            var directory = directoryInfo.FullName;
-            Process.Start(directory);
-        }
+        //    var directory = directoryInfo.FullName;
+        //    Process.Start(directory);
+        //}
 
-        public ICommand OpenConfigurationFile { get; set; }
+
+        public ICommand SaveConfigFile { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

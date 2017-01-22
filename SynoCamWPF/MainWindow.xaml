@@ -3,23 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:SynoCamWPF.ViewModels"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:converters="clr-namespace:SynoCamWPF.Converters"
         xmlns:synoCamWpf="clr-namespace:SynoCamWPF"
         Title="MainWindow" Height="{Binding WindowHeight, Mode=TwoWay}" Width="{Binding WindowWidth, Mode=TwoWay}" Topmost="True" AllowsTransparency="True"
         WindowStyle="None" Background="Transparent" ResizeMode="CanResizeWithGrip" MouseDown="MainWindow_OnMouseDown" MouseDoubleClick="Window_MouseDoubleClick" 
         Top="{Binding WindowsTop, Mode=TwoWay}" Left="{Binding WindowLeft, Mode=TwoWay}" Icon="Camera.ico">
-    <Window.DataContext>
-        <viewModels:MainWindowViewModel />
-    </Window.DataContext>
+    <Window.Resources>
+        <converters:RadioButtonCheckedConverter x:Key="RadioChecked"/>
+        <converters:DivideByNumberConverter x:Key="DivideByNumber"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Refresh Rate">
-                <RadioButton Content="2 seconds"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms2Seconds}}"/>
-                <RadioButton Content="30 seconds" GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms30Seconds}}"/>
+                <RadioButton Content="2 seconds"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioChecked}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms2Seconds}}"/>
+                <RadioButton Content="30 seconds" GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioChecked}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms30Seconds}}"/>
                 <Separator />
-                <RadioButton Content="1 minute"   GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms1Minute}}"/>
-                <RadioButton Content="2 minutes"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms2Minutes}}"/>
+                <RadioButton Content="1 minute"   GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioChecked}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms1Minute}}"/>
+                <RadioButton Content="2 minutes"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioChecked}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms2Minutes}}"/>
                 <Separator />
-                <RadioButton Content="4 minutes"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms4Minutes}}"/>
+                <RadioButton Content="4 minutes"  GroupName="RefreshRate" IsChecked="{Binding RefreshRate, Converter={StaticResource RadioChecked}, ConverterParameter={x:Static synoCamWpf:RefreshRate.Ms4Minutes}}"/>
             </MenuItem>
             <MenuItem Header="Event Viewer" />
             <MenuItem Header="Open Config" Command="{Binding OpenConfigDialog}"></MenuItem>
@@ -33,30 +36,17 @@
             <i:InvokeCommandAction Command="{Binding HideWindowControls}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid>
+    <Grid x:Name="Master">
         <ItemsControl Background="Black" x:Name="CamPanel" ItemsSource="{Binding CameraViews, Mode=OneWay}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
+                    <UniformGrid Rows="1" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="Auto" Height="Auto">
-                        <Image Source="{Binding CamImage, Mode=OneWay}" MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=ActualHeight}" Grid.Column="0" Grid.Row="0">
-                            <Image.Width>
-                                <MultiBinding Converter="{StaticResource DivideByNumber}">
-                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="ActualWidth" />
-                                    <Binding ElementName="CamPanel" Path="Items.Count"></Binding>
-                                </MultiBinding>
-                            </Image.Width>
-                            <Image.MaxWidth>
-                                <MultiBinding Converter="{StaticResource DivideByNumber}">
-                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="ActualWidth" />
-                                    <Binding ElementName="CamPanel" Path="Items.Count"></Binding>
-                                </MultiBinding>
-                            </Image.MaxWidth>
-                        </Image>
+                        <Image Source="{Binding CamImage, Mode=OneWay}" Grid.Column="0" Grid.Row="0" />
                         <Rectangle Width="8" Height="8" Fill="DarkRed" DockPanel.Dock="Right" Opacity="0.8" 
                                    Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding ShowRedDot, Converter={StaticResource BoolToVisibilityConverter}}"></Rectangle>
                     </Grid>
@@ -64,10 +54,10 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <StackPanel HorizontalAlignment="Right"  x:Name="ControlPanel" Orientation="Vertical" Width="11" Background="Transparent">
-            <Button x:Name="CloseButton" Visibility="{Binding WindowControlClose}" Command="{Binding WindowClosePressed}" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">X</Button>
-            <Button x:Name="MinimizeButton" Visibility="{Binding WindowControlMinimize}" Click="MinimizeButton_OnClick" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">-</Button>
-            <Button x:Name="RefreshButton" Visibility="{Binding WindowControlRefresh}" Command="{Binding WindowRefreshPressed}" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">R</Button>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="ControlPanel" Orientation="Horizontal" Background="Transparent" Visibility="{Binding WindowsControl}">
+            <Button x:Name="RefreshButton" Width="20" Height="18" Command="{Binding WindowRefreshPressed}" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">R</Button>
+            <Button x:Name="MinimizeButton" Width="20" Height="18" Click="MinimizeButton_OnClick" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">-</Button>
+            <Button x:Name="CloseButton" Width="20" Height="18" Command="{Binding WindowClosePressed}" Background="Black" Foreground="White" BorderThickness="0" Opacity="0.7">X</Button>
         </StackPanel>
     </Grid>
 </Window>

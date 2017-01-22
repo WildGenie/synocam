@@ -16,8 +16,7 @@ namespace SynoCamWPF.ViewModels
         private static SynoCommand SynoCommand { get; set; }
         private string Password { get; set; }
         private string Username { get; set; }
-        private bool UseHttps { get; set; }
-        private string Address { get; set; }
+        private Uri Address { get; set; }
         private string Port { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -27,9 +26,7 @@ namespace SynoCamWPF.ViewModels
         private int _windowHeight;
         private int _windowLeft;
         private int _windowsTop;
-        private Visibility _windowControlClose;
-        private Visibility _windowControlMinimize;
-        private Visibility _windowControlRefresh;
+        private Visibility _windowsControl;
 
         public ObservableCollection<CamControl> CameraViews
         {
@@ -63,22 +60,10 @@ namespace SynoCamWPF.ViewModels
             set { _windowsTop = value; OnPropertyChanged(); }
         }
 
-        public Visibility WindowControlClose
+        public Visibility WindowsControl
         {
-            get { return _windowControlClose; }
-            set { _windowControlClose = value; OnPropertyChanged(); }
-        }
-
-        public Visibility WindowControlMinimize
-        {
-            get { return _windowControlMinimize; }
-            set { _windowControlMinimize = value; OnPropertyChanged(); }
-        }
-
-        public Visibility WindowControlRefresh
-        {
-            get { return _windowControlRefresh; }
-            set { _windowControlRefresh = value; OnPropertyChanged(); }
+            get { return _windowsControl; }
+            set { _windowsControl = value; OnPropertyChanged(); }
         }
 
         public ICommand ShowWindowControls { get; set; }
@@ -94,29 +79,31 @@ namespace SynoCamWPF.ViewModels
             get
             {
                 string url;
-                if (UseHttps)
-                {
-                    url = "https://" + Address + Port;
-                }
-                else
-                {
-                    url = "http://" + Address + Port;
-                }
-                url += "/webapi/";
+                url = Address.AbsoluteUri.TrimEnd('/') + "/webapi/";
                 return url;
             }
         }
 
-        public RefreshRate RefreshRate { get; set; }
+        private RefreshRate _refreshRate;
+        public RefreshRate RefreshRate { get { return _refreshRate; } set { _refreshRate = value; OnPropertyChanged(); AdjustRefreshRate(); } }
+
+        private void AdjustRefreshRate()
+        {
+            if (CameraViews == null)
+                return;
+
+            foreach (var cam in CameraViews)
+            {
+                cam.RefreshRate = _refreshRate;
+            }
+        }
 
         public MainWindowViewModel()
         {
             RefreshRate = RefreshRate.Ms30Seconds;
-            WindowControlClose = Visibility.Hidden;
-            WindowControlMinimize = Visibility.Hidden;
-            WindowControlRefresh = Visibility.Hidden;
-            ShowWindowControls = new CustomCommand(o => { WindowControlClose = Visibility.Visible; WindowControlMinimize = Visibility.Visible; WindowControlRefresh = Visibility.Visible; }, o => true);
-            HideWindowControls = new CustomCommand(o => { WindowControlClose = Visibility.Hidden; WindowControlMinimize = Visibility.Hidden; WindowControlRefresh = Visibility.Hidden; }, o => true);
+            WindowsControl = Visibility.Hidden;
+            ShowWindowControls = new CustomCommand(o => { WindowsControl = Visibility.Visible; }, o => true);
+            HideWindowControls = new CustomCommand(o => { WindowsControl = Visibility.Hidden; }, o => true);
 
             OpenConfigDialog = new CustomCommand(OpenConfigWindow, o => true);
 
@@ -133,14 +120,12 @@ namespace SynoCamWPF.ViewModels
             WindowHeight = ConfigurationService.Instance.WindowHeight;
             WindowWidth = ConfigurationService.Instance.WindowWidth;
             Address = ConfigurationService.Instance.Address;
-            UseHttps = ConfigurationService.Instance.UseHttps;
             Username = ConfigurationService.Instance.Username;
             Password = ConfigurationService.Instance.Password;
             RefreshRate = ConfigurationService.Instance.RefreshRate;
-            Port = ConfigurationService.Instance.Port;
 
             // Decide if we want the demo mode or live
-            SynoCommand = Address == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
+            SynoCommand = Address.DnsSafeHost == "server.domain.com" ? new SynoCommand() : new SynoCommand(Url, Username, Password);
 
             LoadCameras();
         }
@@ -161,6 +146,12 @@ namespace SynoCamWPF.ViewModels
 
         private void CloseWindow(object o)
         {
+            ConfigurationService.Instance.WindowsTop = WindowsTop;
+            ConfigurationService.Instance.WindowLeft = WindowLeft;
+            ConfigurationService.Instance.WindowHeight = WindowHeight;
+            ConfigurationService.Instance.WindowWidth = WindowWidth;
+            ConfigurationService.Instance.RefreshRate = RefreshRate;
+
             ConfigurationService.Instance.SaveSettings();
             Application.Current.Shutdown(0);
         }

@@ -25,25 +25,13 @@ namespace SynoCamWPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server.domain.com")]
-        public string ServerIpOrDns {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://server.domain.com:5001/")]
+        public global::System.Uri Address {
             get {
-                return ((string)(this["ServerIpOrDns"]));
+                return ((global::System.Uri)(this["Address"]));
             }
             set {
-                this["ServerIpOrDns"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseHttps {
-            get {
-                return ((bool)(this["UseHttps"]));
-            }
-            set {
-                this["UseHttps"] = value;
+                this["Address"] = value;
             }
         }
         
@@ -68,18 +56,6 @@ namespace SynoCamWPF.Properties {
             }
             set {
                 this["Password"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("443")]
-        public string Port {
-            get {
-                return ((string)(this["Port"]));
-            }
-            set {
-                this["Port"] = value;
             }
         }
         

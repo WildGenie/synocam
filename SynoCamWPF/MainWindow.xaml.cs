@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using SynoCamWPF.ViewModels;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SynoCamWPF
@@ -11,6 +12,7 @@ namespace SynoCamWPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
 
         private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
