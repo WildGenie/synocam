@@ -161,7 +161,7 @@ namespace SynoCamWPF.ViewModels
             try
             {
                 var result = await SynoCommand.GetCamsASync();
-                CameraViews = new ObservableCollection<CamControl>(result.Select(c => new CamControl(c, RefreshRate)).ToList());
+                CameraViews = new ObservableCollection<CamControl>(result.Where(c => c.Enabled).Select(c => new CamControl(c, RefreshRate)).ToList());
             }
             catch (Exception ex)
             {
