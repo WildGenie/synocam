@@ -35,7 +35,7 @@ namespace SynoCamLib
         {
             var httpRequest = new HttpRequest();
             httpRequest.Parameters.Add("api", "SYNO.API.Auth");
-            httpRequest.Parameters.Add("version", "2");
+            httpRequest.Parameters.Add("version", "6");
             httpRequest.Parameters.Add("method", "Login");
             httpRequest.Parameters.Add("account", username);
             httpRequest.Parameters.Add("passwd", password);
@@ -74,7 +74,7 @@ namespace SynoCamLib
 
             var httpRequest = new HttpRequest();
             httpRequest.Parameters.Add("api", "SYNO.API.Auth");
-            httpRequest.Parameters.Add("version", "2");
+            httpRequest.Parameters.Add("version", "6");
             httpRequest.Parameters.Add("method", "Logout");
             httpRequest.Parameters.Add("session", "SurveillanceStation");
             httpRequest.Parameters.Add("_sid", _sessionId);
@@ -113,6 +113,9 @@ namespace SynoCamLib
             {
                 var status = (CamStatus)cam["status"];
                 var realCam = new Cam(cam["name"], status, cam["enabled"] && (status == CamStatus.Normal), GetCamImageUrl(cam["id"].ToString()));
+
+                var live = GetLiveViewPath(cam["id"].ToString());
+
                 cams.Add(realCam);
             }
 
@@ -131,13 +134,26 @@ namespace SynoCamLib
             return cameraListDictionary;
         }
 
+        private string GetLiveViewPath(string camId)
+        {
+            var httpRequest = new HttpRequest();
+            httpRequest.Parameters.Add("api", "SYNO.SurveillanceStation.Camera");
+            httpRequest.Parameters.Add("version", "9");
+            httpRequest.Parameters.Add("_sid", _sessionId);
+            httpRequest.Parameters.Add("idList", camId);
+            httpRequest.Parameters.Add("method", "GetLiveViewPath");
+            httpRequest.Parameters.Add("uri", _url);
+
+            return httpRequest.GetUrl(_url + "entry.cgi");
+        }
+
         private string GetCamImageUrl(string camId)
         {
             var httpRequest = new HttpRequest();
             httpRequest.Parameters.Add("api", "SYNO.SurveillanceStation.Camera");
-            httpRequest.Parameters.Add("version", "8");
-            httpRequest.Parameters.Add("_sid", _sessionId);
-            httpRequest.Parameters.Add("cameraId", camId);
+            httpRequest.Parameters.Add("version", "9");
+            httpRequest.Parameters.Add("_sid", _sessionId);            
+            httpRequest.Parameters.Add("id", camId);
             httpRequest.Parameters.Add("method", "GetSnapshot");
             httpRequest.Parameters.Add("uri", _url);
 

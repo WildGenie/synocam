@@ -36,7 +36,7 @@ namespace SynoCamLib
                         ImageChangedEvent?.Invoke(this, EventArgs.Empty);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // Do nothing, we allow this to fail sometimes
                 }

@@ -204,7 +204,7 @@ namespace SynoCam
             bool result = false;
 
             List<ICam> results = await _synoCommand.GetCamsASync();
-            _cams = results.Select(c => new CamUi(c, Ms4Minutes)).ToList();
+            _cams = results.Select(c => new CamUi(c, 500)).ToList();
 
             foreach (var cam in _cams)
             {
