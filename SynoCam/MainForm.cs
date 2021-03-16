@@ -30,7 +30,7 @@ namespace SynoCam
         private string Username { get; set; }
         private string Password { get; set; }
         private string Port { get; set; }
-        
+
         private readonly SynoCommand _synoCommand;
         List<CamUi> _cams = new List<CamUi>();
 
@@ -55,7 +55,7 @@ namespace SynoCam
         public MainForm()
         {
             InitializeComponent();
-                
+
             Address = Settings.Default.ServerIpOrDns;
             UseHttps = Settings.Default.UseHttps;
             Username = Settings.Default.Username;
@@ -204,7 +204,7 @@ namespace SynoCam
             bool result = false;
 
             List<ICam> results = await _synoCommand.GetCamsASync();
-            _cams = results.Select(c => new CamUi(c, Ms4Minutes)).ToList();
+            _cams = results.Select(c => new CamUi(c, 1000)).ToList();
 
             foreach (var cam in _cams)
             {
@@ -213,7 +213,7 @@ namespace SynoCam
                 newCam.DoubleClick += MainFormDoubleClick;
                 newCam.ImageLoaded += cam_LoadCompleted;
                 newCam.Visible = false;
-                
+
                 Invoke(new Action(() => Controls.Add(newCam)));
                 result = true;
             }
@@ -223,8 +223,8 @@ namespace SynoCam
 
         void cam_LoadCompleted(object sender, EventArgs e)
         {
-            Invoke((Action)delegate 
-            { 
+            Invoke((Action)delegate
+            {
                 Refresh();
                 labelLoading.Visible = false;
                 foreach (var cam in _cams)

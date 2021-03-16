@@ -41,10 +41,10 @@ namespace SynoCam
             this.fourMinutesRefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControl = new System.Windows.Forms.Panel();
-            this.labelLoading = new System.Windows.Forms.Label();
             this.noFocusCueButton1 = new SynoCam.NoFocusCueButton();
             this.buttonClose = new SynoCam.NoFocusCueButton();
             this.buttonMinimize = new SynoCam.NoFocusCueButton();
+            this.labelLoading = new System.Windows.Forms.Label();
             this.contextMenu.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +55,7 @@ namespace SynoCam
             this.refreshRateToolStripMenuItem,
             this.viewEventsToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(153, 70);
+            this.contextMenu.Size = new System.Drawing.Size(140, 48);
             // 
             // refreshRateToolStripMenuItem
             // 
@@ -66,48 +66,48 @@ namespace SynoCam
             this.twoMinutesRefreshToolStripMenuItem,
             this.fourMinutesRefreshToolStripMenuItem});
             this.refreshRateToolStripMenuItem.Name = "refreshRateToolStripMenuItem";
-            this.refreshRateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.refreshRateToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.refreshRateToolStripMenuItem.Text = "Refresh Rate";
             // 
             // twoSecondsRefreshToolStripMenuItem
             // 
             this.twoSecondsRefreshToolStripMenuItem.Name = "twoSecondsRefreshToolStripMenuItem";
-            this.twoSecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoSecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.twoSecondsRefreshToolStripMenuItem.Text = "2 seconds";
             this.twoSecondsRefreshToolStripMenuItem.Click += new System.EventHandler(this.TwoSecondsToolStripMenuItemClick);
             // 
             // thirtySecondsRefreshToolStripMenuItem
             // 
             this.thirtySecondsRefreshToolStripMenuItem.Name = "thirtySecondsRefreshToolStripMenuItem";
-            this.thirtySecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.thirtySecondsRefreshToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.thirtySecondsRefreshToolStripMenuItem.Text = "30 seconds";
             this.thirtySecondsRefreshToolStripMenuItem.Click += new System.EventHandler(this.ThirtySecondsToolStripMenuItemClick);
             // 
             // oneMinuteRefreshToolStripMenuItem
             // 
             this.oneMinuteRefreshToolStripMenuItem.Name = "oneMinuteRefreshToolStripMenuItem";
-            this.oneMinuteRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oneMinuteRefreshToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.oneMinuteRefreshToolStripMenuItem.Text = "1 minute";
             this.oneMinuteRefreshToolStripMenuItem.Click += new System.EventHandler(this.OneMinuteToolStripMenuItemClick);
             // 
             // twoMinutesRefreshToolStripMenuItem
             // 
             this.twoMinutesRefreshToolStripMenuItem.Name = "twoMinutesRefreshToolStripMenuItem";
-            this.twoMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.twoMinutesRefreshToolStripMenuItem.Text = "2 minutes";
             this.twoMinutesRefreshToolStripMenuItem.Click += new System.EventHandler(this.TwoMinutesToolStripMenuItemClick);
             // 
             // fourMinutesRefreshToolStripMenuItem
             // 
             this.fourMinutesRefreshToolStripMenuItem.Name = "fourMinutesRefreshToolStripMenuItem";
-            this.fourMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fourMinutesRefreshToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.fourMinutesRefreshToolStripMenuItem.Text = "4 minutes";
             this.fourMinutesRefreshToolStripMenuItem.Click += new System.EventHandler(this.FourMinutesToolStripMenuItemClick);
             // 
             // viewEventsToolStripMenuItem
             // 
             this.viewEventsToolStripMenuItem.Name = "viewEventsToolStripMenuItem";
-            this.viewEventsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewEventsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.viewEventsToolStripMenuItem.Text = "View Events";
             this.viewEventsToolStripMenuItem.Click += new System.EventHandler(this.viewEventsToolStripMenuItem_Click);
             // 
@@ -119,20 +119,10 @@ namespace SynoCam
             this.panelControl.Controls.Add(this.noFocusCueButton1);
             this.panelControl.Controls.Add(this.buttonClose);
             this.panelControl.Controls.Add(this.buttonMinimize);
-            this.panelControl.Location = new System.Drawing.Point(534, -2);
+            this.panelControl.Location = new System.Drawing.Point(673, -2);
             this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(14, 251);
+            this.panelControl.Size = new System.Drawing.Size(14, 423);
             this.panelControl.TabIndex = 3;
-            // 
-            // labelLoading
-            // 
-            this.labelLoading.ForeColor = System.Drawing.Color.White;
-            this.labelLoading.Location = new System.Drawing.Point(221, 126);
-            this.labelLoading.Name = "labelLoading";
-            this.labelLoading.Size = new System.Drawing.Size(111, 15);
-            this.labelLoading.TabIndex = 4;
-            this.labelLoading.Text = "Loading, please wait..";
-            this.labelLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // noFocusCueButton1
             // 
@@ -189,10 +179,20 @@ namespace SynoCam
             this.buttonMinimize.UseVisualStyleBackColor = false;
             this.buttonMinimize.Click += new System.EventHandler(this.MinimizeButtonClick);
             // 
+            // labelLoading
+            // 
+            this.labelLoading.ForeColor = System.Drawing.Color.White;
+            this.labelLoading.Location = new System.Drawing.Point(297, 186);
+            this.labelLoading.Name = "labelLoading";
+            this.labelLoading.Size = new System.Drawing.Size(111, 15);
+            this.labelLoading.TabIndex = 4;
+            this.labelLoading.Text = "Loading, please wait..";
+            this.labelLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(548, 248);
+            this.ClientSize = new System.Drawing.Size(687, 420);
             this.ContextMenuStrip = this.contextMenu;
             this.ControlBox = false;
             this.Controls.Add(this.labelLoading);
