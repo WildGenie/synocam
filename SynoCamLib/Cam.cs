@@ -36,7 +36,7 @@ namespace SynoCamLib
                         ImageChangedEvent?.Invoke(this, EventArgs.Empty);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // Do nothing, we allow this to fail sometimes
                 }
@@ -56,7 +56,7 @@ namespace SynoCamLib
 
         private EventHandler _imageChangedEvent;
         private readonly Uri _url;
-        
+
 
         public Cam(string name, CamStatus status, bool enabled, string url)
         {
